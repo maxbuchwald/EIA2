@@ -1,0 +1,1 @@
+Erzeuge eine einfache Textdatei mit der Endung “.txt” im Dateinamen und schreibe einige Worte hinein, auch mit mehreren Leerzeichenfolgen, Umlauten und Tabulatoren. Lade diese Datei im Browser und schaue dir in den Entwicklertools die Seitenstruktur an (Tab links neben Console)
