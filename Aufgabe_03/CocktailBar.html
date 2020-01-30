@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>CocktailBar</title>
+    <!-- <link rel="stylesheet" href="CocktailBar.css" type="text/css" media="screen" /> -->
+    <script src="CocktailBar.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<header>
+    <h1>CocktailBar</h1>
+    <p>Choose a Drink</p>
+</header>
+
+<body>
+    <form>
+        <div id="form">
+
+            <fieldset>
+                <legend>Drink</legend>
+                <select name="Drink">
+                    <option value="Caipirinha" price="15">Caipirinha</option>
+                    <option value="Mojito" price="15">Mojito</option>
+                    <option value="Cuba Libre" price="12">Cuba Libre</option>
+                    <option value="Asbach Zitrone" price="9">Asbach Zitrone</option>
+                </select>
+            </fieldset>
+            <fieldset>
+                <legend>Container</legend>
+                <input type="radio" name="Container" id="Glas" value="Glas" price="3.00" />
+                <label for="Radio1">Glas</label>
+                <input type="radio" name="Container" id="Paper" value="Paper" price="2.00" />
+                <label for="Radio2">Paper</label>
+            </fieldset>
+            <fieldset>
+                <legend>Extras</legend>
+                <input type="checkbox" name="Extra" id="Extra Joss" value="Extra Joss" price="2.00" />
+                <label for="check1">Extra Joss</label>
+                <input type="checkbox" name="Extra" id="Eis" value="Eis" price="10.00" />
+                <label for="check2">Eis</label>
+                <input type="checkbox" name="Extra" id="Zucker" value="Zucker" price="5.00" />
+                <label for="check3">Zucker</label>
+            </fieldset>
+            <fieldset>
+                <legend>Amount</legend>
+                1,0L
+                <input type="range" name="Amount" min="1" max="10" step="0,5" value="0" id="amount" />
+                10,0L
+                <progress value="0" max="10"> </progress>
+            </fieldset>
+        </div>
+    </form>
+    <fieldset>
+        <h2>Your Order</h2>
+        <div id="order">
+            
+            ...
+        </div>
+    </fieldset>
+</body>
+
+</html>
