@@ -72,5 +72,4 @@ var L04_Cocktailbar;
         return group;
     }
 })(L04_Cocktailbar || (L04_Cocktailbar = {}));
-// min 25
 //# sourceMappingURL=Generate_Content.js.map

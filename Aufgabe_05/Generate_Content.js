@@ -1,19 +1,11 @@
-namespace L04_Cocktailbar {
-
-    export interface Item {
-        name: string;
-        price: number;
-    }
-    export interface Data {
-        [category: string]: Item[];
-    }
-    export function generateContent(_data: Data) {
-
+"use strict";
+var L05_Cocktailbar;
+(function (L05_Cocktailbar) {
+    function generateContent(_data) {
         for (let category in _data) {
             //console.log(category);
-            let items: Item[] = _data[category];
-            let group: HTMLElement | null = null;
-
+            let items = _data[category];
+            let group = null;
             switch (category) {
                 case "Drink":
                     group = createSelect(items, category);
@@ -24,69 +16,60 @@ namespace L04_Cocktailbar {
                 case "Extras":
                     group = createSMultiple(items, category);
                     break;
-
                 default:
                     break;
             }
-            let fieldset: HTMLFieldSetElement | null = document.querySelector("fieldset#" + category);
+            let fieldset = document.querySelector("fieldset#" + category);
             if (fieldset && group)
                 fieldset.appendChild(group);
         }
     }
-
-    function createSelect(_items: Item[], _category: string): HTMLElement | null {
-        let group: HTMLSelectElement = document.createElement("select");
+    L05_Cocktailbar.generateContent = generateContent;
+    function createSelect(_items, _category) {
+        let group = document.createElement("select");
         group.name = _category;
         for (let item of _items) {
-            let option: HTMLOptionElement = document.createElement("option");
+            let option = document.createElement("option");
             option.setAttribute("price", item.price.toFixed(2));
             option.value = option.textContent = item.name;
             option.id = item.name;
-
             group.appendChild(option);
-
-
         }
         return group;
     }
-    function createSingle(_items: Item[], _category: string): HTMLElement | null {
-        let group: HTMLSpanElement = document.createElement("span");
+    function createSingle(_items, _category) {
+        let group = document.createElement("span");
         for (let item of _items) {
-            let radio: HTMLInputElement = document.createElement("input");
+            let radio = document.createElement("input");
             radio.type = "radio";
             radio.setAttribute("price", item.price.toFixed(2));
             radio.value = item.name;
             radio.name = _category;
             radio.id = item.name;
-
-            let label: HTMLLabelElement = document.createElement("label");
+            let label = document.createElement("label");
             label.textContent = item.name;
             label.htmlFor = item.name;
-
             group.appendChild(radio);
             group.appendChild(label);
-
         }
         return group;
     }
-    function createSMultiple(_items: Item[], _category: string): HTMLElement | null {
-        let group: HTMLDivElement = document.createElement("div");
+    function createSMultiple(_items, _category) {
+        let group = document.createElement("div");
         for (let item of _items) {
-            let checkbox: HTMLInputElement = document.createElement("input");
+            let checkbox = document.createElement("input");
             checkbox.type = "checkbox";
             checkbox.setAttribute("price", item.price.toFixed(2));
             checkbox.value = item.name;
             checkbox.name = _category;
             checkbox.id = item.name;
-
-            let label: HTMLLabelElement = document.createElement("label");
+            let label = document.createElement("label");
             label.textContent = item.name;
             label.htmlFor = item.name;
-
             group.appendChild(checkbox);
             group.appendChild(label);
         }
         return group;
     }
-}
-
+})(L05_Cocktailbar || (L05_Cocktailbar = {}));
+//# sourceMappingURL=Generate_Content.js.map
