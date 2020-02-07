@@ -38,7 +38,7 @@ namespace Vogelhaus {
         drawSnowflakes(150);
         drawBirds(10);
 
-        canvas.addEventListener("click", throwSnowball);
+        // canvas.addEventListener("click", throwSnowball);
 
         // canvas.addEventListener("Alt", throwFood);
 
@@ -324,22 +324,22 @@ namespace Vogelhaus {
             if (snowballs[i].timer > 0) {
                 snowballs[i].draw();
             }
-        // for (let i: number = 0; i < arrayFood.length; i++) {
-        //     //arrayFood[i].move();
-        //     arrayFood[i].draw();
+            // for (let i: number = 0; i < arrayFood.length; i++) {
+            //     //arrayFood[i].move();
+            //     arrayFood[i].draw();
+            // }
+        }
+
+        // function throwFood(_event: KeyboardEvent): void {
+
+        //     console.log("throwFood");
+
+
+        //     let food: Food = new Food(30 , 20);
+
+        //     arrayFood.push(food);
+
         // }
     }
-
-    // function throwFood(_event: KeyboardEvent): void {
-
-    //     console.log("throwFood");
-
-
-    //     let food: Food = new Food(30 , 20);
-
-    //     arrayFood.push(food);
-
-    // }
 }
-
 

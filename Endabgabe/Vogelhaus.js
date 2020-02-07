@@ -27,7 +27,7 @@ var Vogelhaus;
         let background = Vogelhaus.crc2.getImageData(0, 0, 800, 600);
         drawSnowflakes(150);
         drawBirds(10);
-        canvas.addEventListener("click", throwSnowball);
+        // canvas.addEventListener("click", throwSnowball);
         // canvas.addEventListener("Alt", throwFood);
         window.setInterval(update, 20, background);
     }
