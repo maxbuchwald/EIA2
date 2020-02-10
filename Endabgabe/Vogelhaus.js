@@ -2,14 +2,19 @@
 var Vogelhaus;
 (function (Vogelhaus) {
     window.addEventListener("load", handleLoad);
-    let snowflakes = [];
-    let birds = [];
-    // let arrayFood: Food[] = [];
-    let snowballs = [];
+    Vogelhaus.snowflakes = [];
+    Vogelhaus.birds = [];
+    Vogelhaus.arrayFood = [];
+    Vogelhaus.snowballs = [];
+    Vogelhaus.snowballsLeft = 20;
+    Vogelhaus.foodLeft = 3;
+    Vogelhaus.points = 0;
+    Vogelhaus.updateIntervalId = 0;
     function handleLoad(_event) {
         let canvas = document.querySelector("canvas");
-        if (!canvas)
+        if (!canvas) {
             return;
+        }
         Vogelhaus.crc2 = canvas.getContext("2d");
         drawBackground1();
         drawBackground2();
@@ -24,15 +29,38 @@ var Vogelhaus;
         drawTree(new Vogelhaus.Vector(630, 350));
         drawSnowman(new Vogelhaus.Vector(700, 550));
         drawBirdhouse(new Vogelhaus.Vector(50, 500));
-        let background = Vogelhaus.crc2.getImageData(0, 0, 800, 600);
         drawSnowflakes(150);
         drawBirds(10);
-        // canvas.addEventListener("click", throwSnowball);
-        // canvas.addEventListener("Alt", throwFood);
-        window.setInterval(update, 20, background);
+        // Events
+        canvas.addEventListener("click", throwSnowball);
+        window.addEventListener("keydown", keypress);
+        // Update
+        let background = Vogelhaus.crc2.getImageData(0, 0, 800, 600);
+        Vogelhaus.updateIntervalId = window.setInterval(update, 20, background); // ticks = 1000 / 20 = 50
     }
+    function keypress(_event) {
+        // Space event
+        if (_event.key === " ") {
+            throwFood(_event);
+            return;
+        }
+    }
+    function printInfo() {
+        let spanSnowballsLeft = document.getElementById("snowballsLeft");
+        let spanFoodLeft = document.getElementById("foodLeft");
+        let spanPoints = document.getElementById("points");
+        if (spanSnowballsLeft) {
+            spanSnowballsLeft.innerHTML = Vogelhaus.snowballsLeft.toString();
+        }
+        if (spanFoodLeft) {
+            spanFoodLeft.innerHTML = Vogelhaus.foodLeft.toString();
+        }
+        if (spanPoints) {
+            spanPoints.innerHTML = Vogelhaus.points.toString();
+        }
+    }
+    Vogelhaus.printInfo = printInfo;
     function drawBackground1() {
-        console.log("Background");
         let gradient = Vogelhaus.crc2.createLinearGradient(0, 0, 0, Vogelhaus.crc2.canvas.height);
         gradient.addColorStop(0, "HSL(196, 80%, 82%)");
         gradient.addColorStop(0.5, "HSL(5, 10%, 99%)");
@@ -62,15 +90,14 @@ var Vogelhaus;
         Vogelhaus.crc2.restore();
     }
     function drawCloud(_position, _size) {
-        console.log("Cloud", _position, _size);
         let nParticles = 40;
         let radiusParticle = 25;
         let particle = new Path2D();
         let gradient = Vogelhaus.crc2.createRadialGradient(0, 0, 0, 0, 0, radiusParticle);
+        Vogelhaus.crc2.save();
         particle.arc(0, 0, radiusParticle, 0, 2 * Math.PI);
         gradient.addColorStop(0, "HSLA(0, 100%, 100%, 0.5)");
         gradient.addColorStop(1, "HSLA(0, 100%, 100%, 0)");
-        Vogelhaus.crc2.save();
         Vogelhaus.crc2.translate(_position.x, _position.y);
         Vogelhaus.crc2.fillStyle = gradient;
         for (let drawn = 0; drawn < nParticles; drawn++) {
@@ -213,55 +240,64 @@ var Vogelhaus;
         Vogelhaus.crc2.fill();
         Vogelhaus.crc2.restore();
     }
-    // function throwSnowball(_event: MouseEvent): void {
-    //     console.log("throwSnowball");
-    //     let x: number = _event.clientX;
-    //     let y: number = _event.clientY;
-    //     let ball: Snowball = new Snowball(x, y);
-    //     ball.x = x;
-    //     ball.y = y;
-    //     ball.timer = 25;
-    //     snowballs.push(ball);
-    // }
+    function throwSnowball(_event) {
+        if (Vogelhaus.snowballsLeft === 0) {
+            return;
+        }
+        console.log("throwSnowball");
+        let x = _event.clientX;
+        let y = _event.clientY;
+        let ball = new Vogelhaus.Snowball(x, y);
+        Vogelhaus.snowballs.push(ball);
+        Vogelhaus.snowballsLeft--;
+    }
     function drawBirds(nbirds) {
         console.log("createBirds");
         for (let i = 0; i < nbirds; i++) {
             let bird = new Vogelhaus.Bird();
-            birds.push(bird);
+            Vogelhaus.birds.push(bird);
         }
     }
     function drawSnowflakes(nSnowflakes) {
         console.log("Schneeflocken");
         for (let i = 0; i < nSnowflakes; i++) {
             let snowflake = new Vogelhaus.Snowflake();
-            snowflakes.push(snowflake);
+            Vogelhaus.snowflakes.push(snowflake);
+        }
+    }
+    function throwFood(_event) {
+        if (Vogelhaus.foodLeft === 0) {
+            return;
+        }
+        let food = new Vogelhaus.Food(400, 480, 40, 40);
+        Vogelhaus.arrayFood.push(food);
+        Vogelhaus.foodLeft--;
+        // Solange keine Schneebälle im Flug sind, nicht überprüfen da Schneebälle selbst überprüfen
+        if (Vogelhaus.snowballs.length === 0) {
+            Vogelhaus.checkForEndGame();
         }
     }
     function update(_background) {
         // console.log("updated");
         Vogelhaus.crc2.putImageData(_background, 0, 0);
-        for (let snowflake of snowflakes) {
+        for (let snowflake of Vogelhaus.snowflakes) {
             snowflake.move();
             snowflake.draw();
         }
-        for (let bird of birds) {
+        // Food
+        for (let i = 0; i < Vogelhaus.arrayFood.length; i++) {
+            Vogelhaus.arrayFood[i].draw();
+        }
+        // Birds
+        for (let bird of Vogelhaus.birds) {
             bird.move(1 / 50);
             bird.draw();
         }
-        for (let i = 0; i < snowballs.length; i++) {
-            if (snowballs[i].timer > 0) {
-                snowballs[i].draw();
-            }
-            // for (let i: number = 0; i < arrayFood.length; i++) {
-            //     //arrayFood[i].move();
-            //     arrayFood[i].draw();
-            // }
+        // Snowflakes
+        for (let i = 0; i < Vogelhaus.snowballs.length; i++) {
+            Vogelhaus.snowballs[i].draw();
         }
-        // function throwFood(_event: KeyboardEvent): void {
-        //     console.log("throwFood");
-        //     let food: Food = new Food(30 , 20);
-        //     arrayFood.push(food);
-        // }
+        printInfo();
     }
 })(Vogelhaus || (Vogelhaus = {}));
 //# sourceMappingURL=Vogelhaus.js.map

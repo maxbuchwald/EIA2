@@ -4,35 +4,57 @@ namespace Vogelhaus {
         velocity: Vector;
 
         constructor() {
-
-
             let x: number = 800 * Math.random();
             let y: number = 600 * Math.random();
 
             this.position = new Vector(x, y);
 
             // Geschwindigkeit & Richtung
-            this.velocity = new Vector((Math.random() * -5), (Math.random() * -5.4 + 2.5));
-
+            this.velocity = new Vector((Math.random() * -5), (Math.random() * -5.5 + 2.5)); // -0.5 - 0.5 || 2 - 3
         }
 
         move(_timeslice: number): void {
 
+            let temporaryVelocity: Vector = this.velocity;
 
+            // Schaue ob in Radius r essen liegt
+            let minFoodDistance: number = 80;
+            for (let i: number = 0; i <  arrayFood.length; i++) {
+                let food: Food = arrayFood[i];
+
+                let distance: number = Math.hypot( food.position.x - this.position.x, food.position.y - this.position.y); //quadratischer Bereich 
+
+                if (distance < minFoodDistance) {
+
+                    let cornPosition: Vector = food.cornArray[Math.floor(Math.random() * food.cornArray.length)];
+
+                    let velocity: Vector = new Vector(food.position.x + cornPosition.x - this.position.x, food.position.y + cornPosition.y - this.position.y);
+                    velocity.scale(1 / 50);
+
+                    temporaryVelocity = velocity;
+
+                    break; // Beendet die for Schleife
+                }
+            }
 
             // Geschwindigkeit & Richtung zu Positon addieren
-            this.position.add(this.velocity);
+            this.position.add(temporaryVelocity);
 
-            if (this.position.x < 0)
+            if (this.position.x < 0) {
                 this.position.x += crc2.canvas.width;
-            if (this.position.y < 0)
+            }
+
+            if (this.position.y < 0) {
                 this.position.y += crc2.canvas.height;
-            if (this.position.x > crc2.canvas.width)
+            }
+
+            if (this.position.x > crc2.canvas.width) {
                 this.position.x -= crc2.canvas.width;
-            if (this.position.y > crc2.canvas.height)
+            }
+
+            if (this.position.y > crc2.canvas.height) {
                 this.position.y -= crc2.canvas.height;
-
-
+            }
         }
 
         draw(): void {

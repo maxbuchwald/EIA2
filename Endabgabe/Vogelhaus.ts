@@ -1,22 +1,24 @@
 namespace Vogelhaus {
-
-
     window.addEventListener("load", handleLoad);
-    export let crc2: CanvasRenderingContext2D;
-    let snowflakes: Snowflake[] = [];
-    let birds: Bird[] = [];
-    // let arrayFood: Food[] = [];
-    let snowballs: Snowball[] = [];
 
-
+    export let crc2: CanvasRenderingContext2D; // immer das gleiche objekt
+    export let snowflakes: Snowflake[] = [];
+    export let birds: Bird[] = [];
+    export let arrayFood: Food[] = [];
+    export let snowballs: Snowball[] = [];
+    export let snowballsLeft: number = 20;
+    export let foodLeft: number = 3;
+    export let points: number = 0;
+    export let updateIntervalId: number = 0;
 
 
     function handleLoad(_event: Event): void {
-        let canvas: HTMLCanvasElement | null = document.querySelector("canvas");
-        if (!canvas)
+        let canvas: HTMLCanvasElement = <HTMLCanvasElement>document.querySelector("canvas");
+        if (!canvas) {
             return;
-        crc2 = <CanvasRenderingContext2D>canvas.getContext("2d");
+        }
 
+        crc2 = <CanvasRenderingContext2D>canvas.getContext("2d");
 
         drawBackground1();
         drawBackground2();
@@ -33,24 +35,45 @@ namespace Vogelhaus {
         drawSnowman(new Vector(700, 550));
         drawBirdhouse(new Vector(50, 500));
 
-        let background: ImageData = crc2.getImageData(0, 0, 800, 600);
-
         drawSnowflakes(150);
         drawBirds(10);
 
-        // canvas.addEventListener("click", throwSnowball);
+        // Events
+        canvas.addEventListener("click", throwSnowball);
 
-        // canvas.addEventListener("Alt", throwFood);
+        window.addEventListener("keydown", keypress);
 
-
-
-
-        window.setInterval(update, 20, background);
+        // Update
+        let background: ImageData = crc2.getImageData(0, 0, 800, 600);
+        updateIntervalId = window.setInterval(update, 20, background); // ticks = 1000 / 20 = 50
     }
 
+    function keypress(_event: KeyboardEvent): void {
+        // Space event
+        if (_event.key === " ") {
+            throwFood(_event);
+            return;
+        }
+    }
+
+    export function printInfo(): void {
+        let spanSnowballsLeft: HTMLSpanElement = <HTMLSpanElement>document.getElementById("snowballsLeft");
+        let spanFoodLeft: HTMLSpanElement = <HTMLSpanElement>document.getElementById("foodLeft");
+        let spanPoints: HTMLSpanElement = <HTMLSpanElement>document.getElementById("points");
+
+        if (spanSnowballsLeft) {
+            spanSnowballsLeft.innerHTML = snowballsLeft.toString();
+        }
+        if (spanFoodLeft) {
+            spanFoodLeft.innerHTML = foodLeft.toString();
+        }
+        if (spanPoints) {
+            spanPoints.innerHTML = points.toString();
+        }
+
+    }
 
     function drawBackground1(): void {
-        console.log("Background");
 
         let gradient: CanvasGradient = crc2.createLinearGradient(0, 0, 0, crc2.canvas.height);
         gradient.addColorStop(0, "HSL(196, 80%, 82%)");
@@ -91,18 +114,17 @@ namespace Vogelhaus {
     }
 
     function drawCloud(_position: Vector, _size: Vector): void {
-        console.log("Cloud", _position, _size);
 
         let nParticles: number = 40;
         let radiusParticle: number = 25;
         let particle: Path2D = new Path2D();
         let gradient: CanvasGradient = crc2.createRadialGradient(0, 0, 0, 0, 0, radiusParticle);
 
+        crc2.save();
         particle.arc(0, 0, radiusParticle, 0, 2 * Math.PI);
         gradient.addColorStop(0, "HSLA(0, 100%, 100%, 0.5)");
         gradient.addColorStop(1, "HSLA(0, 100%, 100%, 0)");
 
-        crc2.save();
         crc2.translate(_position.x, _position.y);
         crc2.fillStyle = gradient;
 
@@ -162,9 +184,6 @@ namespace Vogelhaus {
     }
 
     function drawTree(_position: Vector): void {
-
-
-
         crc2.save();
         crc2.translate(_position.x, _position.y);
 
@@ -277,16 +296,22 @@ namespace Vogelhaus {
 
     }
 
-    // function throwSnowball(_event: MouseEvent): void {
-    //     console.log("throwSnowball");
-    //     let x: number = _event.clientX;
-    //     let y: number = _event.clientY;
-    //     let ball: Snowball = new Snowball(x, y);
-    //     ball.x = x;
-    //     ball.y = y;
-    //     ball.timer = 25;
-    //     snowballs.push(ball);
-    // }
+    function throwSnowball(_event: MouseEvent): void {
+        if (snowballsLeft === 0) {
+            return;
+        }
+
+        console.log("throwSnowball");
+
+        let x: number = _event.clientX;
+        let y: number = _event.clientY;
+
+        let ball: Snowball = new Snowball(x, y);
+
+        snowballs.push(ball);
+
+        snowballsLeft--;
+    }
 
     function drawBirds(nbirds: number): void {
         console.log("createBirds");
@@ -306,6 +331,22 @@ namespace Vogelhaus {
         }
     }
 
+    function throwFood(_event: KeyboardEvent): void {
+        if (foodLeft === 0) {
+            return;
+        }
+
+        let food: Food = new Food(400, 480, 40, 40);
+        arrayFood.push(food);
+
+        foodLeft--;
+
+        // Solange keine Schneebälle im Flug sind, nicht überprüfen da Schneebälle selbst überprüfen
+        if (snowballs.length === 0) {
+            checkForEndGame();
+        }
+    }
+
     function update(_background: ImageData): void {
         // console.log("updated");
         crc2.putImageData(_background, 0, 0);
@@ -315,31 +356,23 @@ namespace Vogelhaus {
             snowflake.draw();
         }
 
+        // Food
+        for (let i: number = 0; i < arrayFood.length; i++) {
+            arrayFood[i].draw();
+        }
+
+        // Birds
         for (let bird of birds) {
             bird.move(1 / 50);
             bird.draw();
         }
 
+        // Snowflakes
         for (let i: number = 0; i < snowballs.length; i++) {
-            if (snowballs[i].timer > 0) {
-                snowballs[i].draw();
-            }
-            // for (let i: number = 0; i < arrayFood.length; i++) {
-            //     //arrayFood[i].move();
-            //     arrayFood[i].draw();
-            // }
+            snowballs[i].draw();
         }
 
-        // function throwFood(_event: KeyboardEvent): void {
-
-        //     console.log("throwFood");
-
-
-        //     let food: Food = new Food(30 , 20);
-
-        //     arrayFood.push(food);
-
-        // }
+        printInfo();
     }
 }
 

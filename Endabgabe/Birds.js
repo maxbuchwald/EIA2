@@ -7,19 +7,37 @@ var Vogelhaus;
             let y = 600 * Math.random();
             this.position = new Vogelhaus.Vector(x, y);
             // Geschwindigkeit & Richtung
-            this.velocity = new Vogelhaus.Vector((Math.random() * -5), (Math.random() * -5.4 + 2.5));
+            this.velocity = new Vogelhaus.Vector((Math.random() * -5), (Math.random() * -5.5 + 2.5)); // -0.5 - 0.5 || 2 - 3
         }
         move(_timeslice) {
+            let temporaryVelocity = this.velocity;
+            // Schaue ob in Radius r essen liegt
+            let minFoodDistance = 80;
+            for (let i = 0; i < Vogelhaus.arrayFood.length; i++) {
+                let food = Vogelhaus.arrayFood[i];
+                let distance = Math.hypot(food.position.x - this.position.x, food.position.y - this.position.y); //quadratischer Bereich 
+                if (distance < minFoodDistance) {
+                    let cornPosition = food.cornArray[Math.floor(Math.random() * food.cornArray.length)];
+                    let velocity = new Vogelhaus.Vector(food.position.x + cornPosition.x - this.position.x, food.position.y + cornPosition.y - this.position.y);
+                    velocity.scale(1 / 50);
+                    temporaryVelocity = velocity;
+                    break; // Beendet die for Schleife
+                }
+            }
             // Geschwindigkeit & Richtung zu Positon addieren
-            this.position.add(this.velocity);
-            if (this.position.x < 0)
+            this.position.add(temporaryVelocity);
+            if (this.position.x < 0) {
                 this.position.x += Vogelhaus.crc2.canvas.width;
-            if (this.position.y < 0)
+            }
+            if (this.position.y < 0) {
                 this.position.y += Vogelhaus.crc2.canvas.height;
-            if (this.position.x > Vogelhaus.crc2.canvas.width)
+            }
+            if (this.position.x > Vogelhaus.crc2.canvas.width) {
                 this.position.x -= Vogelhaus.crc2.canvas.width;
-            if (this.position.y > Vogelhaus.crc2.canvas.height)
+            }
+            if (this.position.y > Vogelhaus.crc2.canvas.height) {
                 this.position.y -= Vogelhaus.crc2.canvas.height;
+            }
         }
         draw() {
             // console.log("drawn");
