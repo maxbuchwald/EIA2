@@ -19,10 +19,10 @@ namespace Vogelhaus {
 
             // Schaue ob in Radius r essen liegt
             let minFoodDistance: number = 80;
-            for (let i: number = 0; i <  arrayFood.length; i++) {
+            for (let i: number = 0; i < arrayFood.length; i++) {
                 let food: Food = arrayFood[i];
 
-                let distance: number = Math.hypot( food.position.x - this.position.x, food.position.y - this.position.y); //quadratischer Bereich 
+                let distance: number = Math.hypot(food.position.x - this.position.x, food.position.y - this.position.y); //quadratischer Bereich 
 
                 if (distance < minFoodDistance) {
 
@@ -92,10 +92,6 @@ namespace Vogelhaus {
             crc2.strokeStyle = "black";
             crc2.stroke();
             crc2.restore();
-
-
-
-
         }
     }
 }

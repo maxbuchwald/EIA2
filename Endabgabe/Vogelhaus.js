@@ -8,8 +8,8 @@ var Vogelhaus;
     Vogelhaus.snowballs = [];
     Vogelhaus.snowballsLeft = 20;
     Vogelhaus.foodLeft = 3;
-    Vogelhaus.points = 0;
     Vogelhaus.updateIntervalId = 0;
+    Vogelhaus.points = 0;
     function handleLoad(_event) {
         let canvas = document.querySelector("canvas");
         if (!canvas) {
@@ -27,7 +27,7 @@ var Vogelhaus;
         drawTree(new Vogelhaus.Vector(660, 260));
         drawTree(new Vogelhaus.Vector(780, 320));
         drawTree(new Vogelhaus.Vector(630, 350));
-        drawSnowman(new Vogelhaus.Vector(700, 550));
+        drawSnowman(new Vogelhaus.Vector(720, 550));
         drawBirdhouse(new Vogelhaus.Vector(50, 500));
         drawSnowflakes(150);
         drawBirds(10);
@@ -244,23 +244,23 @@ var Vogelhaus;
         if (Vogelhaus.snowballsLeft === 0) {
             return;
         }
-        console.log("throwSnowball");
+        //Click Koordinaten
         let x = _event.clientX;
         let y = _event.clientY;
         let ball = new Vogelhaus.Snowball(x, y);
         Vogelhaus.snowballs.push(ball);
         Vogelhaus.snowballsLeft--;
     }
-    function drawBirds(nbirds) {
+    function drawBirds(_nbirds) {
         console.log("createBirds");
-        for (let i = 0; i < nbirds; i++) {
+        for (let i = 0; i < _nbirds; i++) {
             let bird = new Vogelhaus.Bird();
             Vogelhaus.birds.push(bird);
         }
     }
-    function drawSnowflakes(nSnowflakes) {
+    function drawSnowflakes(_nSnowflakes) {
         console.log("Schneeflocken");
-        for (let i = 0; i < nSnowflakes; i++) {
+        for (let i = 0; i < _nSnowflakes; i++) {
             let snowflake = new Vogelhaus.Snowflake();
             Vogelhaus.snowflakes.push(snowflake);
         }
@@ -278,7 +278,6 @@ var Vogelhaus;
         }
     }
     function update(_background) {
-        // console.log("updated");
         Vogelhaus.crc2.putImageData(_background, 0, 0);
         for (let snowflake of Vogelhaus.snowflakes) {
             snowflake.move();
@@ -293,7 +292,7 @@ var Vogelhaus;
             bird.move(1 / 50);
             bird.draw();
         }
-        // Snowflakes
+        // Snowballs
         for (let i = 0; i < Vogelhaus.snowballs.length; i++) {
             Vogelhaus.snowballs[i].draw();
         }

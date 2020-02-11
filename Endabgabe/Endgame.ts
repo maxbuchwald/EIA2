@@ -1,8 +1,9 @@
 namespace Vogelhaus {
+
     let serverUrl: string = "https://eia-repository-mb.herokuapp.com";
 
-    export async function checkForEndGame(): Promise<void> {
-        if (snowballsLeft === 0 && foodLeft === 0) {
+    export async function checkForEndGame(): Promise<void>  {
+        if (snowballsLeft === 0) {
             // Beende Spiel
             console.log("Game end");
 
@@ -16,8 +17,9 @@ namespace Vogelhaus {
 
     export async function sendScoreToServer(): Promise<void> {
         let name: string | null = prompt("Your name");
+        
 
-        let score = {
+        let score: any = {
             name: name,
             score: points
         };
@@ -29,12 +31,12 @@ namespace Vogelhaus {
         let response: Response = await fetch(serverUrl + "/get");
         let responseText: string = await response.text();
 
-        let scoreboard = JSON.parse(responseText);
+        let scoreboard: any = JSON.parse(responseText);
 
         let scoreboardBody: string = "";
 
         for (let i: number = 0; i < scoreboard.length; i++) {
-            let score = scoreboard[i];
+            let score: any = scoreboard[i];
 
             let tdPoints: string = "<td>" + score.points + "</td>";
             let tdName: string = "<td>" + score.name + "</td>";
@@ -43,7 +45,7 @@ namespace Vogelhaus {
             scoreboardBody += tr;
         }
 
-        let tableScoreboardBody: HTMLSpanElement = <HTMLSpanElement>document.getElementById("tableScoreboardBody");
+        let tableScoreboardBody: HTMLSpanElement = <HTMLSpanElement> document.getElementById("tableScoreboardBody");
         tableScoreboardBody.innerHTML = scoreboardBody;
     }
 }

@@ -3,7 +3,7 @@ var Vogelhaus;
 (function (Vogelhaus) {
     let serverUrl = "https://eia-repository-mb.herokuapp.com";
     async function checkForEndGame() {
-        if (Vogelhaus.snowballsLeft === 0 && Vogelhaus.foodLeft === 0) {
+        if (Vogelhaus.snowballsLeft === 0) {
             // Beende Spiel
             console.log("Game end");
             window.clearInterval(Vogelhaus.updateIntervalId);
