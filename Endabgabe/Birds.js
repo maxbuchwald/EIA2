@@ -9,7 +9,7 @@ var Vogelhaus;
             // Geschwindigkeit & Richtung
             this.velocity = new Vogelhaus.Vector((Math.random() * -5), (Math.random() * -5.5 + 2.5)); // -0.5 - 0.5 || 2 - 3
         }
-        move(_timeslice) {
+        move() {
             let temporaryVelocity = this.velocity;
             // Schaue ob in Radius r essen liegt
             let minFoodDistance = 80;

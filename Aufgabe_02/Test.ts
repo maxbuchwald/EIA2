@@ -1,7 +1,45 @@
-namespace L02_Load {
-    window.addEventListener("load", handleLoad);
+class Vector {
+    x: number;
+    y: number;
 
-    function handleLoad(_event: Event): void {
-        console.log(_event);
+    constructor(_x: number, _y: number) {
+        this.set(_x, _y);
+    }
+
+    set(_x: number, _y: number): void {
+        this.x = _x;
+        this.y = _y;
+    }
+
+    scale(_factor: number): void {
+        this.x *= _factor;
+        this.y *= _factor;
+    }
+
+    add(_addend: Vector): void {
+        this.x += _addend.x;
+        this.y += _addend.y;
     }
 }
+
+class Moveable {
+    position: Vector;
+    velocity: Vector;
+    expendable: boolean = false;
+
+    constructor(_position?: Vector) {
+        // console.log("Moveable constructor");
+
+        if (_position)
+            this.position = _position.copy();
+        else
+            this.position = new Vector(0, 0);
+
+        this.velocity = new Vector(0, 0);
+    }
+}
+
+
+let m: Moveable = new Moveable();
+
+console.log(m);

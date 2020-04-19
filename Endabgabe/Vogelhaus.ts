@@ -8,8 +8,8 @@ namespace Vogelhaus {
     export let snowballs: Snowball[] = [];
     export let snowballsLeft: number = 20;
     export let foodLeft: number = 3;
-    export let points: number = 0;
     export let updateIntervalId: number = 0;
+    export let points: number = 0;
 
 
     function handleLoad(_event: Event): void {
@@ -17,7 +17,6 @@ namespace Vogelhaus {
         if (!canvas) {
             return;
         }
-
         crc2 = <CanvasRenderingContext2D>canvas.getContext("2d");
 
         drawBackground1();
@@ -32,7 +31,7 @@ namespace Vogelhaus {
         drawTree(new Vector(780, 320));
         drawTree(new Vector(630, 350));
 
-        drawSnowman(new Vector(700, 550));
+        drawSnowman(new Vector(720, 550));
         drawBirdhouse(new Vector(50, 500));
 
         drawSnowflakes(150);
@@ -297,12 +296,8 @@ namespace Vogelhaus {
     }
 
     function throwSnowball(_event: MouseEvent): void {
-        if (snowballsLeft === 0) {
-            return;
-        }
 
-        console.log("throwSnowball");
-
+        //Click Koordinaten
         let x: number = _event.clientX;
         let y: number = _event.clientY;
 
@@ -311,21 +306,23 @@ namespace Vogelhaus {
         snowballs.push(ball);
 
         snowballsLeft--;
+        // Solange keine Schneebälle im Flug sind, nicht überprüfen da Schneebälle selbst überprüfen
+        if (snowballs.length === 0) {
+            checkForEndGame();
+        }
     }
 
-    function drawBirds(nbirds: number): void {
-        console.log("createBirds");
+    function drawBirds(_nbirds: number): void {
 
-        for (let i: number = 0; i < nbirds; i++) {
+        for (let i: number = 0; i < _nbirds; i++) {
             let bird: Bird = new Bird();
             birds.push(bird);
         }
     }
 
-    function drawSnowflakes(nSnowflakes: number): void {
-        console.log("Schneeflocken");
+    function drawSnowflakes(_nSnowflakes: number): void {
 
-        for (let i: number = 0; i < nSnowflakes; i++) {
+        for (let i: number = 0; i < _nSnowflakes; i++) {
             let snowflake: Snowflake = new Snowflake();
             snowflakes.push(snowflake);
         }
@@ -341,14 +338,10 @@ namespace Vogelhaus {
 
         foodLeft--;
 
-        // Solange keine Schneebälle im Flug sind, nicht überprüfen da Schneebälle selbst überprüfen
-        if (snowballs.length === 0) {
-            checkForEndGame();
-        }
+
     }
 
     function update(_background: ImageData): void {
-        // console.log("updated");
         crc2.putImageData(_background, 0, 0);
 
         for (let snowflake of snowflakes) {
@@ -363,11 +356,11 @@ namespace Vogelhaus {
 
         // Birds
         for (let bird of birds) {
-            bird.move(1 / 50);
+            bird.move();
             bird.draw();
         }
 
-        // Snowflakes
+        // Snowballs
         for (let i: number = 0; i < snowballs.length; i++) {
             snowballs[i].draw();
         }

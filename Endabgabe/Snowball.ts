@@ -40,6 +40,7 @@ namespace Vogelhaus {
                 for (let i: number = 0; i < birds.length; i++) {
                     let bird: Bird = birds[i];
 
+
                     let distance: number = Math.hypot(bird.position.x - this.position.x + 20, bird.position.y - this.position.y + 20);
 
                     let circleRadius: number = relativeSize / 2;

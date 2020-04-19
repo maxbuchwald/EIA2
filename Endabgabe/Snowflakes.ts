@@ -6,6 +6,7 @@ namespace Vogelhaus {
         constructor() {
             let x: number = 800 * Math.random();
             let y: number = 600 * Math.random();
+            
             this.position = new Vector(x, y);
 
             // Geschwindigkeit & Richtung
