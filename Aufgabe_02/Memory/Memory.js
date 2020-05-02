@@ -2,7 +2,6 @@
 var memory;
 (function (memory) {
     let chosenSequence = ["A", "P", "F", "E", "L"];
-    // let chosensequenceLength: number = chosenSequence.length;
     window.addEventListener("load", handleLoad);
     function handleLoad() {
         let chosenSequence = document.querySelector("input#sequence");
@@ -26,19 +25,24 @@ var memory;
     function startgame(_event) {
         console.log("startgame");
         let arraylength = chosenSequence.length;
-        let i;
-        for (i = 0; i > arraylength; i++) {
-            let x = _event.offsetX;
-            let y = _event.offsetY;
-            let mail = _event.target;
-            let letter = document.createElement("span");
-            mail.appendChild(letter);
-            let randomArray = Math.floor(Math.random() * Math.floor(arraylength));
-            letter.textContent = chosenSequence[randomArray];
-            letter.style.left = x + "px";
-            letter.style.top = y + "px";
-            console.log("for Looop");
+        let letter = document.querySelector("div#board");
+        letter.innerHTML = "";
+        let randomArray = Math.floor(Math.random() * Math.floor(arraylength));
+        // let letter: string = "";
+        for (let i = 0; i > arraylength; i++) {
+            letter.innerHTML += chosenSequence[randomArray];
+            // letter += chosenSequence[randomArray]
+            console.log("for Loop");
         }
+        // document.getElementById("board").innerHTML = letter;
+        // let x: number = _event.offsetX;
+        // let y: number = _event.offsetY;
+        // let mail: HTMLElement = <HTMLElement>_event.target;
+        // let sequence: HTMLSpanElement = document.createElement("span");
+        // sequence.appendChild(letter);
+        // letter.textContent = chosenSequence[randomArray];
+        // letter.style.left = x + "px";
+        // letter.style.top = y + "px";
     }
 })(memory || (memory = {}));
 //# sourceMappingURL=Memory.js.map
