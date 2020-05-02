@@ -36,10 +36,10 @@ namespace memory {
 
         // let letter: string = "";
         for (let i: number = 0; i > arraylength; i++) {
+            console.log("for Loop");
 
             letter.innerHTML += chosenSequence[randomArray];
             // letter += chosenSequence[randomArray]
-            console.log("for Loop");
         }
 
         // document.getElementById("board").innerHTML = letter;

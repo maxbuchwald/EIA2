@@ -30,9 +30,9 @@ var memory;
         let randomArray = Math.floor(Math.random() * Math.floor(arraylength));
         // let letter: string = "";
         for (let i = 0; i > arraylength; i++) {
+            console.log("for Loop");
             letter.innerHTML += chosenSequence[randomArray];
             // letter += chosenSequence[randomArray]
-            console.log("for Loop");
         }
         // document.getElementById("board").innerHTML = letter;
         // let x: number = _event.offsetX;
