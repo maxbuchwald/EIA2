@@ -34,6 +34,6 @@ namespace memory {
         // mail.appendChild(letter);
 
         // letter.textContent = chosenSequence;
-        console.log(mail);
+        // console.log(mail);
     }
 }

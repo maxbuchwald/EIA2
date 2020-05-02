@@ -29,7 +29,7 @@ var memory;
         // let letter: HTMLSpanElement = document.createElement("span");
         // mail.appendChild(letter);
         // letter.textContent = chosenSequence;
-        console.log(mail);
+        // console.log(mail);
     }
 })(memory || (memory = {}));
 //# sourceMappingURL=Memory.js.map
