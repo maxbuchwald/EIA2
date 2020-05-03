@@ -27,10 +27,10 @@ var memory;
         let arraylength = chosenSequence.length;
         let letter = document.querySelector("div#board");
         letter.innerHTML = "";
-        let randomArray = Math.floor(Math.random() * Math.floor(arraylength));
         // let letter: string = "";
-        for (let i = 0; i > arraylength; i++) {
+        for (let i = 0; i < arraylength; i++) {
             console.log("for Loop");
+            let randomArray = Math.floor(Math.random() * Math.floor(arraylength));
             letter.innerHTML += chosenSequence[randomArray];
             // letter += chosenSequence[randomArray]
         }

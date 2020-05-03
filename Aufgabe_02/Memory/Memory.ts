@@ -32,11 +32,11 @@ namespace memory {
 
         let letter: HTMLSpanElement = <HTMLSpanElement>document.querySelector("div#board");
         letter.innerHTML = "";
-        let randomArray: number = Math.floor(Math.random() * Math.floor(arraylength));
 
         // let letter: string = "";
-        for (let i: number = 0; i > arraylength; i++) {
+        for (let i: number = 0; i < arraylength; i++) {
             console.log("for Loop");
+            let randomArray: number = Math.floor(Math.random() * Math.floor(arraylength));
 
             letter.innerHTML += chosenSequence[randomArray];
             // letter += chosenSequence[randomArray]
