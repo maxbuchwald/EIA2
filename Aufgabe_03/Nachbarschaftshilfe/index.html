@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Nachbarschaftshilfe</title>
+    <link rel="stylesheet" href="Nachbarschaftshilfe.css" type="text/css" media="screen" />
+    <script src="Nachbarschaftshilfe.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Neighbourhood Help</h1>
+        <p>We will do the necessary work for you. Stay at home and stay safe!</p>
+    </header>
+
+    <form>
+        <div id="form">
+            <fieldset>
+                <legend>supermarked</legend>
+                <input type="text" name="shopping" list="shopping" placeholder="what to buy?" />
+                <datalist id="shopping">
+                    <option value="Butter" name="Butter" price="1.50"> </option>
+                    <option value="Milk" name="Milk" price="0.9"> </option>
+                    <option value="Flour" name="Flour" price="0.4"> </option>
+                    <option value="Sugar" name="Sugar" price="0.7"> </option>
+                    <option value="Eggs" name="Eggs" price="0.4"> </option>
+                    <option value="Salt" name="Salt" price="0.35"> </option>
+                    <option value="Bread" name="Bread" price="1.5"> </option>
+                </datalist>
+                <input type="number" id="amount" name="amount" price="7" min="0" max="500"step="5">
+                <label for="amount">€</label>
+                <br>
+				<input type="radio" name="Supermarket" id="rewe" value="Rewe" checked/>
+				<label for="rewe">Rewe</label>
+				<input type="radio" name="Supermarket" id="edeka" value="Edeka"/>
+				<label for="edeka">Edeka</label>
+				<input type="radio" name="Supermarket" id="aldi" value="Aldi"/>
+				<label for="aldi">Aldi</label>
+				<input type="radio" name="Supermarket" id="lidl" value="Lidl"/>
+                <label for="lidl">Lidl</label>
+                <input type="radio" name="Supermarket" id="müller" value="Müller"/>
+				<label for="müller">Müller</label>
+            </fieldset>
+            <fieldset>
+                <legend>Household help</legend>
+                <input type="text" name="Household" list="work" placeholder="Household help" />
+                <datalist id="work">
+                    <option value="go out with dogs"price="7">go out with dogs</option>
+                    <option value="Gardening" price="9">Gardening</option>
+                    <option value="Postal Service" price="5">Postal Service</option>
+                </datalist>
+            </fieldset>
+            <fieldset>
+                <legend>Withdrawals</legend>
+                <input type="number" id="money" name="money" price="7" min="0" max="500"step="5" value="5">
+                <label for="money">€</label>
+            </fieldset>
+
+        </div>
+    </form>
+    <div>
+        <h2>Your order</h2>
+        <div id="order">
+        </div>
+    </div>
+</body>
+
+</html>
