@@ -18,9 +18,9 @@
         <div id="form">
             <fieldset>
                 <legend>supermarked</legend>
-                <input type="text" name="shopping" list="shopping" placeholder="what to buy?" />
+                <input type="text" name="shopping" list="shopping" placeholder="what to buy?" multiple/>
                 <datalist id="shopping">
-                    <option value="Butter" name="Butter" price="1.50"> </option>
+                    <option value="Butter" name="Butter" price="1.50" default> </option>
                     <option value="Milk" name="Milk" price="0.9"> </option>
                     <option value="Flour" name="Flour" price="0.4"> </option>
                     <option value="Sugar" name="Sugar" price="0.7"> </option>
@@ -28,34 +28,34 @@
                     <option value="Salt" name="Salt" price="0.35"> </option>
                     <option value="Bread" name="Bread" price="1.5"> </option>
                 </datalist>
-                <input type="number" id="amount" name="amount" price="7" min="0" max="500"step="5">
-                <label for="amount">€</label>
+                 <!-- <input type="number" id="amount" name="amount" price="1" min="0" max="50"step="1">
+                <label for="amount">amount</label> -->
                 <br>
-				<input type="radio" name="Supermarket" id="rewe" value="Rewe" checked/>
+				<input type="radio" name="supermarket" id="rewe" value="Rewe" checked/>
 				<label for="rewe">Rewe</label>
-				<input type="radio" name="Supermarket" id="edeka" value="Edeka"/>
+				<input type="radio" name="supermarket" id="edeka" value="Edeka"/>
 				<label for="edeka">Edeka</label>
-				<input type="radio" name="Supermarket" id="aldi" value="Aldi"/>
+				<input type="radio" name="supermarket" id="aldi" value="Aldi"/>
 				<label for="aldi">Aldi</label>
-				<input type="radio" name="Supermarket" id="lidl" value="Lidl"/>
+				<input type="radio" name="supermarket" id="lidl" value="Lidl"/>
                 <label for="lidl">Lidl</label>
-                <input type="radio" name="Supermarket" id="müller" value="Müller"/>
+                <input type="radio" name="supermarket" id="müller" value="Müller"/>
 				<label for="müller">Müller</label>
             </fieldset>
             <fieldset>
                 <legend>Household help</legend>
-                <input type="text" name="Household" list="work" placeholder="Household help" />
-                <datalist id="work">
-                    <option value="go out with dogs"price="7">go out with dogs</option>
+                <input type="text" name="household" list="work" placeholder="Household help" value="go out with dogs" price= "7" />
+                <datalist id="work" >
+                    <option value="go out with dogs" price="7">go out with dogs</option>
                     <option value="Gardening" price="9">Gardening</option>
                     <option value="Postal Service" price="5">Postal Service</option>
                 </datalist>
             </fieldset>
             <fieldset>
                 <legend>Withdrawals</legend>
-                <input type="number" id="money" name="money" price="7" min="0" max="500"step="5" value="5">
+                <input type="number" id="money" name="money" price="7" min="0" max="500"step="5">
                 <label for="money">€</label>
-            </fieldset>
+            </fieldset> 
 
         </div>
     </form>
