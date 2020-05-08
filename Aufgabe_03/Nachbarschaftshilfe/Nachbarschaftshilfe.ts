@@ -47,7 +47,7 @@ namespace L03_CocktailBar {
  
             if (entry[0] == "money") {
                 let money: HTMLInputElement = <HTMLInputElement>document.querySelector("[value='" + entry[1] + "']");
-                let price: number = Number(money);
+                let price: number = Number(money.getAttribute("price"));
                 console.log(price);
    
             }

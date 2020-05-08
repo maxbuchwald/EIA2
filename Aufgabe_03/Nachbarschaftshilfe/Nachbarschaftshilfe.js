@@ -40,7 +40,7 @@ var L03_CocktailBar;
             }
             if (entry[0] == "money") {
                 let money = document.querySelector("[value='" + entry[1] + "']");
-                let price = Number(money);
+                let price = Number(money.getAttribute("price"));
                 console.log(price);
             }
         }
