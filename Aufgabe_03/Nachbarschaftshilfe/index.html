@@ -44,7 +44,7 @@
             </fieldset>
             <fieldset>
                 <legend>Household help</legend>
-                <input type="text" name="household" list="work" placeholder="Household help" value="go out with dogs" price= "7" />
+                <input type="text" name="household" list="work" placeholder="Household help" price= "7" />
                 <datalist id="work" >
                     <option value="go out with dogs" price="7">go out with dogs</option>
                     <option value="Gardening" price="9">Gardening</option>
@@ -53,6 +53,11 @@
             </fieldset>
             <fieldset>
                 <legend>Withdrawals</legend>
+                <input type="radio" name="money" id="abheben" value="abheben" checked/>
+				<label for="abheben">Abheben</label>
+				<input type="radio" name="money" id="einzahlen" value="einzahlen"/>
+                <label for="einzahlen">Einzahlen</label>
+                <br>
                 <input type="number" id="money" name="money" price="7" min="0" max="500"step="5">
                 <label for="money">€</label>
             </fieldset> 
