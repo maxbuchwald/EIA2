@@ -12,19 +12,6 @@ var L03_CocktailBar;
         order.innerHTML = "";
         let formData = new FormData(document.forms[0]);
         for (let entry of formData) {
-            // if (entry[0] == "amount") {
-            // let itemamount: HTMLInputElement = <HTMLInputElement>document.querySelector("[value='" + entry[1] + "']");
-            // let priceamount: number = Number(itemamount.getAttribute("price"));
-            // console.log(entry[0], entry[1]);
-            // continue;
-            // }
-            if (entry[0] == "shopping") {
-                let item = document.querySelector("[value='" + entry[1] + "']");
-                let price = Number(item.getAttribute("price"));
-                order.innerHTML += item.value + " " + price + " € " + "<br>";
-                // console.log(entry[0], entry[1]);
-                continue;
-            }
             if (entry[0] == "supermarket") {
                 let supermarket = document.querySelector("[value='" + entry[1] + "']");
                 order.innerHTML += supermarket.value + "<br>";
@@ -32,16 +19,26 @@ var L03_CocktailBar;
                 // continue;
             }
             if (entry[0] == "household") {
-                console.log(entry[1]);
-                let household = document.querySelector("[value='" + entry[1] + "']");
-                let price = Number(household.getAttribute("price"));
-                order.innerHTML += household.value + " " + price + " €" + "<br>";
-                // continue;
+                if (entry[1] != null && entry[1] != "") {
+                    let household = document.querySelector("[value='" + entry[1] + "']");
+                    let price = Number(household.getAttribute("price"));
+                    order.innerHTML += household.value + " " + price + " €" + "<br>";
+                    // continue;
+                }
             }
             if (entry[0] == "money") {
-                let money = document.querySelector("[value='" + entry[1] + "']");
-                let price = Number(money.getAttribute("price"));
-                console.log(price);
+                if (entry[1] != null && entry[1] != "") {
+                    let money = document.querySelector("[value='" + entry[1] + "']");
+                    let pricemoney = Number(money.value);
+                    console.log(pricemoney);
+                }
+            }
+            if (entry[0] == "shopping") {
+                if (entry[1] != null && entry[1] != "") {
+                    let item = document.querySelector("[value='" + entry[1] + "']");
+                    let price = Number(item.getAttribute("price"));
+                    order.innerHTML += item.value + " " + price + " € " + "<br>";
+                }
             }
         }
     }

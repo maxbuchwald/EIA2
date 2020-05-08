@@ -23,22 +23,25 @@ namespace L03_CocktailBar {
                 // continue;
             }
             if (entry[0] == "household") {
-                console.log(entry[1]);
-                let household: HTMLInputElement = <HTMLInputElement>document.querySelector("[value='" + entry[1] + "']");
-                let price: number = Number(household.getAttribute("price"));
-                order.innerHTML += household.value + " " + price + " €" + "<br>";
-                // continue;
+                if (entry[1] != null && entry[1] != "") {
+                    let household: HTMLInputElement = <HTMLInputElement>document.querySelector("[value='" + entry[1] + "']");
+                    let price: number = Number(household.getAttribute("price"));
+                    order.innerHTML += household.value + " " + price + " €" + "<br>";
+                    // continue;
+                }
             }
 
             if (entry[0] == "money") {
-                let money: HTMLInputElement = <HTMLInputElement>document.querySelector("[value='" + entry[1] + "']");
-                let pricemoney: number = Number(money.getAttribute("price"));
-                console.log(pricemoney);
+                if (entry[1] != null && entry[1] != "") {
+                    let money: HTMLInputElement = <HTMLInputElement>document.querySelector("[value='" + entry[1] + "']");
+                    let pricemoney: number = Number(money.value);
+                    console.log(pricemoney);
+                }
             }
             if (entry[0] == "shopping") {
-                let item: HTMLInputElement = <HTMLInputElement>document.querySelector("[value='" + entry[1] + "']");
-                let price: number = Number(item.getAttribute("price"));
-                if (price != null) {
+                if (entry[1] != null && entry[1] != "") {
+                    let item: HTMLInputElement = <HTMLInputElement>document.querySelector("[value='" + entry[1] + "']");
+                    let price: number = Number(item.getAttribute("price"));
                     order.innerHTML += item.value + " " + price + " € " + "<br>";
                 }
             }
