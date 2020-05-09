@@ -1,4 +1,4 @@
-namespace L03_CocktailBar {
+namespace Nachbarschaftshilfe {
     window.addEventListener("load", handleLoad);
 
 

@@ -1,6 +1,6 @@
 "use strict";
-var L03_CocktailBar;
-(function (L03_CocktailBar) {
+var Nachbarschaftshilfe;
+(function (Nachbarschaftshilfe) {
     window.addEventListener("load", handleLoad);
     function handleLoad(_event) {
         // console.log("Start");
@@ -51,5 +51,5 @@ var L03_CocktailBar;
         bill += householdprice + withdrawalprice + shoppingprice;
         order.innerHTML += "<br>" + "total " + bill + "€";
     }
-})(L03_CocktailBar || (L03_CocktailBar = {}));
+})(Nachbarschaftshilfe || (Nachbarschaftshilfe = {}));
 //# sourceMappingURL=Nachbarschaftshilfe.js.map
