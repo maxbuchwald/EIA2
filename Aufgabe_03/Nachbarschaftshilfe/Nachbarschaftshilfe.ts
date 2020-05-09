@@ -8,7 +8,6 @@ namespace L03_CocktailBar {
         form.addEventListener("change", handleChange);
 
     }
-
     function handleChange(): void {
         let order: HTMLDivElement = <HTMLDivElement>document.querySelector("div#order");
         order.innerHTML = "";
