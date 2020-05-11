@@ -3,7 +3,6 @@ namespace Nachbarschaftshilfe {
 
 
     function handleLoad(_event: Event): void {
-        // console.log("Start");
         let form: HTMLDivElement = <HTMLDivElement>document.querySelector("div#form");
         form.addEventListener("change", handleChange);
 

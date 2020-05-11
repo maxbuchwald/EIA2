@@ -3,7 +3,6 @@ var Nachbarschaftshilfe;
 (function (Nachbarschaftshilfe) {
     window.addEventListener("load", handleLoad);
     function handleLoad(_event) {
-        // console.log("Start");
         let form = document.querySelector("div#form");
         form.addEventListener("change", handleChange);
     }
