@@ -24,7 +24,11 @@ var Nachbarschaftshilfe_04;
             { name: "Postal Service", price: 5 }
         ],
         Withdrawals: [
-            { name: "money", price: 5 }
+            { name: "abheben", price: 0 },
+            { name: "einzahlen", price: 0 }
+        ],
+        Money: [
+            { name: "Money", price: 5 }
         ]
     };
 })(Nachbarschaftshilfe_04 || (Nachbarschaftshilfe_04 = {}));

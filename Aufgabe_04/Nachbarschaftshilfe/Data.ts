@@ -17,13 +17,13 @@ namespace Nachbarschaftshilfe_04 {
             { name: "Sugar", price: 0.7 },
             { name: "Eggs", price: 0.4 },
             { name: "Salt", price: 0.35 },
-            { name: "Bread", price: 1.5 }
+            { name: "Bread", price: 1.5 }            
         ],
         Supermarked: [
             { name: "Rewe", price: 0 },
             { name: "Edeka", price: 0 },
             { name: "Aldi", price: 0 },
-            { name: "Lidl", price: 0  }
+            { name: "Lidl", price: 0  },
             { name: "Müller", price: 0  }
 
         ],
@@ -33,7 +33,11 @@ namespace Nachbarschaftshilfe_04 {
             { name: "Postal Service", price: 5 }
         ],
         Withdrawals: [
-            { name: "money", price: 5 }            
+            { name: "abheben", price: 0 },            
+            { name: "einzahlen", price: 0 }
+        ],
+        Money: [
+            { name: "Money", price: 5 }            
         ]
     };
 }

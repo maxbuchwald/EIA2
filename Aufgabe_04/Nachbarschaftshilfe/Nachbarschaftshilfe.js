@@ -8,48 +8,32 @@ var Nachbarschaftshilfe_04;
         form.addEventListener("change", handleChange);
     }
     function handleChange(_event) {
+        displayOrder();
+    }
+    function displayOrder() {
+        let price = 0;
         let order = document.querySelector("div#order");
         order.innerHTML = "";
         let formData = new FormData(document.forms[0]);
-        let householdprice = 0;
-        let withdrawalprice = 0;
-        let shoppingprice = 0;
         for (let entry of formData) {
-            if (entry[0] == "supermarket") {
-                let supermarket = document.querySelector("[value='" + entry[1] + "']");
-                order.innerHTML += supermarket.value + "<br>";
+            let selector = "[value='" + entry[1] + "']"; // "[name='" + entry[0] + "'][value='" + entry[1] + "']";
+            let item = document.querySelector(selector);
+            let itemPrice = Number(item.getAttribute("price"));
+            switch (entry[0]) {
+                case "Amount":
+                    break;
+                case "Shopping":
+                    let amount = Number(formData.get("Amount"));
+                    itemPrice = amount * itemPrice;
+                    order.innerHTML += amount + " x " + item.value + ": €" + itemPrice.toFixed(2) + "<br>";
+                    break;
+                // case "Money":
+                //     console.log("money");
+                default:
+                    order.innerHTML += item.value + ": €" + itemPrice.toFixed(2) + "<br>";
             }
-            if (entry[0] == "household") {
-                if (entry[1] != null && entry[1] != "") {
-                    let household = document.querySelector("[value='" + entry[1] + "']");
-                    let price = Number(household.getAttribute("price"));
-                    householdprice += price;
-                    order.innerHTML += household.value + " " + price + "€" + "<br>";
-                }
-            }
-            if (entry[0] == "money") {
-                if (entry[1] != null && entry[1] != "") {
-                    let money = document.querySelector("[name='" + entry[0] + "']");
-                    let pricemoney = Number(money.value);
-                    let fee = 5;
-                    if (pricemoney == 0)
-                        fee = 0;
-                    withdrawalprice += pricemoney + fee,
-                        order.innerHTML += "Withdrawal " + pricemoney + "€ + fee " + fee + " € " + "<br>";
-                }
-            }
-            if (entry[0] == "shopping") {
-                if (entry[1] != null && entry[1] != "") {
-                    let item = document.querySelector("[value='" + entry[1] + "']");
-                    let price = Number(item.getAttribute("price"));
-                    shoppingprice += price;
-                    order.innerHTML += item.value + " " + price + "€ " + "<br>";
-                }
-            }
+            price += itemPrice;
         }
-        let bill = 0;
-        bill += householdprice + withdrawalprice + shoppingprice;
-        order.innerHTML += "<br>" + "total " + bill + "€";
     }
 })(Nachbarschaftshilfe_04 || (Nachbarschaftshilfe_04 = {}));
 //# sourceMappingURL=Nachbarschaftshilfe.js.map
