@@ -15,9 +15,25 @@ var Nachbarschaftshilfe_04;
         let order = document.querySelector("div#order");
         order.innerHTML = "";
         let formData = new FormData(document.forms[0]);
+        // let withdrawalprice: number = 0;
         for (let entry of formData) {
-            let selector = "[value='" + entry[1] + "']"; // "[name='" + entry[0] + "'][value='" + entry[1] + "']";
+            if (entry[0] == "Supermarked" || entry[0] == "Withdrawals") {
+                let supermarket = document.querySelector("[value='" + entry[1] + "']");
+                order.innerHTML += supermarket.value + "<br>";
+            }
+            // if (entry[0] == "Money") {
+            //     let money: HTMLInputElement = <HTMLInputElement>document.querySelector("[name='" + entry[0] + "']");
+            //     let pricemoney: number = Number(money.value);
+            //     let fee: number = 5;
+            //     if (pricemoney == 0)
+            //         fee = 0;
+            //     withdrawalprice += pricemoney + fee,
+            //         order.innerHTML += "Withdrawal " + pricemoney + "€ + fee " + fee + " € " + "<br>";
+            // }
+            let selector = "[value='" + entry[1] + "']";
             let item = document.querySelector(selector);
+            if (item == null)
+                continue;
             let itemPrice = Number(item.getAttribute("price"));
             switch (entry[0]) {
                 case "Amount":
