@@ -8,6 +8,8 @@ var Nachbarschaftshilfe_05;
         let offer = await response.text();
         let data = JSON.parse(offer);
         Nachbarschaftshilfe_05.generateContent(data);
+        let shopping = document.querySelector("#Shoppinginput");
+        shopping.addEventListener("change", createOptionShopping);
         form = document.querySelector("form");
         let submit = document.querySelector("button[type=button]");
         form.addEventListener("change", handleChange);
@@ -15,7 +17,6 @@ var Nachbarschaftshilfe_05;
         submit.addEventListener("click", sendOrder);
     }
     async function sendOrder(_event) {
-        console.log("Send order");
         let formData = new FormData(form);
         let query = new URLSearchParams(formData);
         await fetch("index.html?" + query.toString());
@@ -30,16 +31,15 @@ var Nachbarschaftshilfe_05;
         order.innerHTML = "";
         let formData = new FormData(document.forms[0]);
         for (let entry of formData) {
-            if (entry[0] == "Supermarked" || entry[0] == "Withdrawals") {
-                let supermarket = document.querySelector("[value='" + entry[1] + "']");
-                order.innerHTML += supermarket.value + "<br>";
-            }
             let selector = "[value='" + entry[1] + "']";
             let item = document.querySelector(selector);
             if (item == null)
                 continue;
             let itemPrice = Number(item.getAttribute("price"));
             switch (entry[0]) {
+                case "Supermarked":
+                    order.innerHTML += item.value + "<br>";
+                    break;
                 case "Amount":
                     break;
                 case "Shopping":
@@ -47,10 +47,27 @@ var Nachbarschaftshilfe_05;
                     itemPrice = amount * itemPrice;
                     order.innerHTML += amount + " x " + item.value + ": €" + itemPrice.toFixed(2) + "<br>";
                     break;
-                default:
+                case "Household":
                     order.innerHTML += item.value + ": €" + itemPrice.toFixed(2) + "<br>";
+                    break;
+                case "Withdrawals":
+                    let money = Number(formData.get("Money"));
+                    price += money;
+                    order.innerHTML += item.value + " " + money + "€  " + "<br>";
+                    break;
+                case "Money":
+                    break;
             }
             price += itemPrice;
+        }
+        order.innerHTML += "<p><strong>Total: : €" + price.toFixed(2);
+    }
+    function createOptionShopping(_event) {
+        let item = document.getElementById("Shoppinginput");
+        if (item) {
+            let clone = item.cloneNode(true);
+            let fieldset = document.getElementById("fieldset#Shopping");
+            fieldset.appendChild(clone);
         }
     }
 })(Nachbarschaftshilfe_05 || (Nachbarschaftshilfe_05 = {}));

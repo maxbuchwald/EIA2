@@ -3,7 +3,6 @@ var Nachbarschaftshilfe_04;
 (function (Nachbarschaftshilfe_04) {
     function generateContent(_data) {
         for (let category in _data) {
-            // console.log(category);
             let items = _data[category];
             let group = null;
             switch (category) {
@@ -110,14 +109,5 @@ var Nachbarschaftshilfe_04;
         }
         return input;
     }
-    // function createAmount(): void {
-    //     let fieldset: HTMLFieldSetElement = <HTMLFieldSetElement>document.querySelector("fieldset#Amount");
-    //     let input: HTMLInputElement = document.createElement("input");
-    //     input.id = "amount";
-    //     input.name = "amount";
-    //     input.type = "number";
-    //     input.value = "1";
-    //     fieldset.appendChild(input);
-    // }
 })(Nachbarschaftshilfe_04 || (Nachbarschaftshilfe_04 = {}));
 //# sourceMappingURL=GenerateContent.js.map

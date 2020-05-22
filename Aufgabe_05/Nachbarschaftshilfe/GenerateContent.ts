@@ -1,4 +1,13 @@
-namespace Nachbarschaftshilfe_04 {
+namespace Nachbarschaftshilfe_05 {
+    export interface Task {
+        name: string;
+        price: number;
+    }
+
+    export interface Data {
+        [category: string]: Task[];
+    }
+
     export function generateContent(_data: Data): void {
 
         for (let category in _data) {
@@ -19,10 +28,6 @@ namespace Nachbarschaftshilfe_04 {
                 case "Withdrawals":
                     group = createWithdrawals(items, category);
                     break;
-                case "Money":
-                    group = createMoney(items, category);
-                    break;
-
                 default:
                     break;
             }
@@ -30,13 +35,13 @@ namespace Nachbarschaftshilfe_04 {
             if (fieldset && group)
                 fieldset.appendChild(group);
         }
-        // createAmount();
     }
     function createShopping(_items: Task[], _category: string): HTMLElement | null {
         let input: HTMLInputElement = document.createElement("input");
         input.name = _category;
         input.type = "text";
         input.setAttribute("list", "shopping");
+        input.id = "Shoppinginput";
 
         let datalist: HTMLDataListElement = document.createElement("datalist");
         datalist.id = "shopping";
@@ -116,20 +121,5 @@ namespace Nachbarschaftshilfe_04 {
 
         }
         return group;
-    }
-    function createMoney(_items: Task[], _category: string): HTMLElement | null {
-
-        let input: HTMLInputElement = document.createElement("input");
-        for (let item of _items) {
-            input.id = item.name;
-            input.type = "number";
-            input.step = "5";
-            input.min = "0";
-            input.max = "500";
-            input.setAttribute("price", item.price.toFixed(2));
-
-        }
-        return input;
-
     }
 }
