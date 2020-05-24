@@ -10,8 +10,8 @@ namespace Nachbarschaftshilfe_05 {
 
         generateContent(data);
 
-        let shopping: HTMLInputElement = <HTMLInputElement>document.querySelector("#Shoppinginput");
-        shopping.addEventListener("change", createOptionShopping);
+        // let shopping: HTMLInputElement = <HTMLInputElement>document.querySelector("#Shoppinginput");
+        // shopping.addEventListener("change", createOptionShopping);
 
         form = <HTMLFormElement>document.querySelector("form");
         let submit: HTMLButtonElement = <HTMLButtonElement>document.querySelector("button[type=button]");
