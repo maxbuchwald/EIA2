@@ -69,6 +69,7 @@ namespace Nachbarschaftshilfe_05 {
         }
         order.innerHTML += "<p><strong>Total: : €" + price.toFixed(2);
     }
+    
     // function createOptionShopping(_event: Event): void {
     //     createSupermarked(items, category)
     //     // let item: HTMLInputElement = <HTMLInputElement>document.getElementById("Shoppinginput");
