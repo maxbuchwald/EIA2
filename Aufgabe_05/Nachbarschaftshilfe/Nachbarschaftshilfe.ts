@@ -69,15 +69,16 @@ namespace Nachbarschaftshilfe_05 {
         }
         order.innerHTML += "<p><strong>Total: : €" + price.toFixed(2);
     }
-
-
-    function createOptionShopping(_event: Event): void {
-        let item: HTMLInputElement = <HTMLInputElement>document.getElementById("Shoppinginput");
-        if (item) {
-            let clone: Node = item.cloneNode(true);
-            let fieldset: HTMLFieldSetElement = <HTMLFieldSetElement>document.getElementById("fieldset#Shopping");
-            fieldset.appendChild(clone);
-        }
-        
-    }
+    // function createOptionShopping(_event: Event): void {
+    //     createSupermarked(items, category)
+    //     // let item: HTMLInputElement = <HTMLInputElement>document.getElementById("Shoppinginput");
+    //     // if (item) {
+    //     //     let clone: Node = item.cloneNode(true);
+    //     //     let fieldset: HTMLFieldSetElement = <HTMLFieldSetElement>document.querySelector("fieldset#Shopping");
+    //     //     fieldset.appendChild(clone);
+    //     //     let itemclone: HTMLInputElement = <HTMLInputElement>document.getElementById("Shoppinginput")?.lastChild;
+    //     //     itemclone.value = "";
+    //     //     // console.log(itemclone.value);
+    //     // }
+    // }
 }

@@ -36,6 +36,8 @@ namespace Nachbarschaftshilfe_05 {
                 fieldset.appendChild(group);
         }
     }
+
+
     function createShopping(_items: Task[], _category: string): HTMLElement | null {
         let input: HTMLInputElement = document.createElement("input");
         input.name = _category;
