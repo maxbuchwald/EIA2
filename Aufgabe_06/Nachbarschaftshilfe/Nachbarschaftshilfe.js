@@ -3,7 +3,7 @@ var Nachbarschaftshilfe_06;
 (function (Nachbarschaftshilfe_06) {
     window.addEventListener("load", handleLoad);
     let form;
-    let url = "http://localhost:5001";
+    let url = "https://eia-repository-mb.herokuapp.com/";
     async function handleLoad(_event) {
         let response = await fetch("Data.json");
         let offer = await response.text();

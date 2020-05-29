@@ -2,7 +2,7 @@ namespace Nachbarschaftshilfe_06 {
     window.addEventListener("load", handleLoad);
 
     let form: HTMLFormElement;
-    let url: string = "http://localhost:5001";
+    let url: string = "https://eia-repository-mb.herokuapp.com/";
     async function handleLoad(_event: Event): Promise<void> {
 
         let response: Response = await fetch("Data.json");
