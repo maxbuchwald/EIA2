@@ -42,7 +42,6 @@ namespace Nachbarschaftshilfe_06 {
                 continue;
             let itemPrice: number = Number(item.getAttribute("price"));
 
-
             switch (entry[0]) {
                 case "Supermarked":
                     order.innerHTML += item.value + "<br>";
