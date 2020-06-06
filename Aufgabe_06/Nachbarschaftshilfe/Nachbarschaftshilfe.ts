@@ -3,6 +3,7 @@ namespace Nachbarschaftshilfe_06 {
 
     let form: HTMLFormElement;
     let url: string = "https://eia-repository-mb.herokuapp.com/";
+    let price: number = 0;
     async function handleLoad(_event: Event): Promise<void> {
 
         let response: Response = await fetch("Data.json");
@@ -18,19 +19,11 @@ namespace Nachbarschaftshilfe_06 {
         displayOrder();
         submit.addEventListener("click", sendOrder);
     }
-    async function sendOrder(_event: Event): Promise<void> {
-        let formData: FormData = new FormData(form);
-        let query: URLSearchParams = new URLSearchParams(<any>formData);
-        let response: Response = await fetch(url + "?" + query.toString());
-        let responseText: string = await response.text();
-        alert(responseText);
-    }
 
     function handleChange(_event: Event): void {
         displayOrder();
     }
     function displayOrder(): void {
-        let price: number = 0;
         let order: HTMLDivElement = <HTMLDivElement>document.querySelector("div#order");
         order.innerHTML = "";
         let formData: FormData = new FormData(document.forms[0]);
@@ -67,5 +60,12 @@ namespace Nachbarschaftshilfe_06 {
             price += itemPrice;
         }
         order.innerHTML += "<p><strong>Total: : €" + price.toFixed(2);
+    }
+    async function sendOrder(_event: Event): Promise<void> {
+        let formData: FormData = new FormData(form);
+        let query: URLSearchParams = new URLSearchParams(<any>formData);
+        let response: Response = await fetch(url + "?" + query.toString());
+        let responseText: string = await response.text();
+        alert("Ihre bestellung wurde verschickt! " + responseText + " Sie kostet: " + price.toFixed(2) );
     }
 }

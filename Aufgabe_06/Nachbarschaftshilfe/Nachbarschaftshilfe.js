@@ -4,6 +4,7 @@ var Nachbarschaftshilfe_06;
     window.addEventListener("load", handleLoad);
     let form;
     let url = "https://eia-repository-mb.herokuapp.com/";
+    let price = 0;
     async function handleLoad(_event) {
         let response = await fetch("Data.json");
         let offer = await response.text();
@@ -15,18 +16,10 @@ var Nachbarschaftshilfe_06;
         displayOrder();
         submit.addEventListener("click", sendOrder);
     }
-    async function sendOrder(_event) {
-        let formData = new FormData(form);
-        let query = new URLSearchParams(formData);
-        let response = await fetch(url + "?" + query.toString());
-        let responseText = await response.text();
-        alert(responseText);
-    }
     function handleChange(_event) {
         displayOrder();
     }
     function displayOrder() {
-        let price = 0;
         let order = document.querySelector("div#order");
         order.innerHTML = "";
         let formData = new FormData(document.forms[0]);
@@ -61,6 +54,13 @@ var Nachbarschaftshilfe_06;
             price += itemPrice;
         }
         order.innerHTML += "<p><strong>Total: : €" + price.toFixed(2);
+    }
+    async function sendOrder(_event) {
+        let formData = new FormData(form);
+        let query = new URLSearchParams(formData);
+        let response = await fetch(url + "?" + query.toString());
+        let responseText = await response.text();
+        alert("Ihre bestellung wurde verschickt! " + responseText + " Sie kostet: " + price.toFixed(2));
     }
 })(Nachbarschaftshilfe_06 || (Nachbarschaftshilfe_06 = {}));
 //# sourceMappingURL=Nachbarschaftshilfe.js.map
