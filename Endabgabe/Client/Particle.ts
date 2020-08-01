@@ -4,13 +4,13 @@ namespace Endabgabe {
         y: number;
         position: Vector;
         size: number;
-        // velocity: Vector;
+        colour: number;
 
 
-        constructor(_x: number, _y: number, _size: number) {
+        constructor(_x: number, _y: number, _size: number, _colour: number) {
             this.position = new Vector(_x, _y);
-            // this.velocity = new Vector(0.3, 3);
             this.size = _size;
+            this.colour = _colour;
         }
         draw(): void {
 
@@ -25,7 +25,7 @@ namespace Endabgabe {
                 let gety: number = 0;
 
                 //Big
-                if (i % 3 == 0  && this.size == 3) {
+                if (i % 3 == 0 && this.size == 3) {
                     getx = Math.cos(x) * radius;
                     gety = Math.sin(x) * radius;
                 }
@@ -60,16 +60,43 @@ namespace Endabgabe {
 
         }
 
-        changecolor(_timeslice: number): void {
+        changecolor(): void {
+            
+            if (this.colour == 1) {
+                let s: string = "0123AB";
+                let c: string = "#";
+                for (let i: number = 0; i < 6; i++) {
+                    c += s[Math.ceil(Math.random() * 5)];
+                }
+                crc2.fillStyle = c;
 
-            let s: string = "0123456789ABCDEF";
-            let c: string = "#";
-            for (let i: number = 0; i < 6; i++) {
-                c += s[Math.ceil(Math.random() * 15)];
             }
-            crc2.fillStyle = c;
+            if (this.colour == 2) {
+                let s: string = "456CD";
+                let c: string = "#";
+                for (let i: number = 0; i < 6; i++) {
+                    c += s[Math.ceil(Math.random() * 5)];
+                }
+                crc2.fillStyle = c;
 
+            }
+            if (this.colour == 3) {
+                let s: string = "789EF";
+                let c: string = "#";
+                for (let i: number = 0; i < 6; i++) {
+                    c += s[Math.ceil(Math.random() * 5)];
+                }
+                crc2.fillStyle = c;
+
+            }
         }
+        // move(_number: number): void {
+        //     crc2.save();
+        //     crc2.translate(this.position.x + _number, this.y);
+        //     console.log(this.position.x);
+        //     crc2.restore();
+        //     return this.position.x;
+        // }
     }
 }
 

@@ -6,7 +6,10 @@ namespace Endabgabe {
     let updateIntervalId: number = 0;
     export let arrayParticle: Particle[] = [];
 
+    let objectDragDrop: Particle;
+    let dragDrop: boolean = false;
     let size: number = 1;
+    let colour: number = 1;
     export let url: string = "http://localhost:5001";
 
     async function handleLoad(_event: Event): Promise<void> {
@@ -18,10 +21,11 @@ namespace Endabgabe {
         crc2 = <CanvasRenderingContext2D>canvas.getContext("2d");
 
         let background: ImageData = crc2.getImageData(0, 0, canvas.width, canvas.height);
-        updateIntervalId = window.setInterval(update, 200, background); // ticks = 1000 / 20 = 50
+        updateIntervalId = window.setInterval(update, 150, background);
 
         canvas.addEventListener("click", dropParticle);
 
+        // Size Radio Buttons
         let smallRadioButton: HTMLInputElement = <HTMLInputElement>document.getElementById("small");
         smallRadioButton.addEventListener("change", () => setSize(1));
 
@@ -31,6 +35,18 @@ namespace Endabgabe {
         let bigRadioButton: HTMLInputElement = <HTMLInputElement>document.getElementById("big");
         bigRadioButton.addEventListener("change", () => setSize(3));
 
+
+        // Colour Radio Buttons
+        let colour1Radiobutton: HTMLInputElement = <HTMLInputElement>document.getElementById("colour1");
+        colour1Radiobutton.addEventListener("change", () => setcolour(1));
+
+        let colour2Radiobutton: HTMLInputElement = <HTMLInputElement>document.getElementById("colour2");
+        colour2Radiobutton.addEventListener("change", () => setcolour(2));
+
+        let colour3Radiobutton: HTMLInputElement = <HTMLInputElement>document.getElementById("colour3");
+        colour3Radiobutton.addEventListener("change", () => setcolour(3));
+
+        // Clear Canvas Button
         let clearCanvas: HTMLButtonElement = <HTMLButtonElement>document.getElementById("clearCanvas");
         clearCanvas.addEventListener("click", resetCanvas);
 
@@ -40,27 +56,43 @@ namespace Endabgabe {
         let submit: HTMLButtonElement = <HTMLButtonElement>document.getElementById("submit");
         submit.addEventListener("click", sendPicture);
 
-        // showObjects();
+        canvas.addEventListener("mousedown", pickSymbol);
+
     }
 
     function setSize(_size: number): void {
         size = _size;
     }
 
-    // function showObjects(_objects: Particle[] = []): void {
-    //     let datalist: HTMLDataListElement = <HTMLDataListElement>document.getElementById("objects");
+    function pickSymbol(_event: MouseEvent): void {
+        // console.log("Mousedown");
 
-    //     for (let objects of _objects) {
+        dragDrop = true;
 
-    //         let name: number = 0;
-    //         name += 1;
-    //         let value: string = name.toString();
-    //         let object: HTMLOptionElement = document.createElement("option");
-    //         object.value = value;
-    //         datalist.appendChild(object);
-    //     }
+        let offsetX: number = _event.clientX;
+        let offsetY: number = _event.clientY;
 
-    // }
+        for (let particle of arrayParticle) {
+
+            if (particle.position.x - 15 < offsetX &&
+                particle.position.x + 15 > offsetX &&
+                particle.position.y - 15 < offsetY &&
+                particle.position.y + 15 > offsetY) {
+                let index: number = arrayParticle.indexOf(particle);
+                arrayParticle.splice(index, 1);
+                objectDragDrop = particle;
+            }
+            // console.log(arrayParticle);
+
+        }
+    }
+
+    function setcolour(_colour: number): void {
+        colour = _colour;
+        for (let particle of arrayParticle) {
+            particle.changecolor();
+        }
+    }
 
     function resetCanvas(): void {
         arrayParticle = [];
@@ -71,9 +103,9 @@ namespace Endabgabe {
         let x: number = _event.clientX;
         let y: number = _event.clientY;
 
-        let particle: Particle = new Particle(x, y, size);
+        let particle: Particle = new Particle(x, y, size, colour);
         arrayParticle.push(particle);
-        console.log(arrayParticle);
+        // console.log(arrayParticle);
 
     }
 
@@ -81,9 +113,9 @@ namespace Endabgabe {
         crc2.putImageData(_background, 0, 0);
 
         for (let particle of arrayParticle) {
-            particle.changecolor(1 / 50);
             particle.draw();
         }
+        // moveparticle();
     }
 
     function chooseSizeCanvas(_event: Event): void {
@@ -113,12 +145,23 @@ namespace Endabgabe {
     async function sendPicture(_event: Event): Promise<void> {
 
         let name: string | null = prompt("Canvas Name");
-        console.log(name);
+        // console.log(name);
 
-    
-        let query: URLSearchParams = new URLSearchParams(<any>arrayParticle);
-        console.log("name");
-        console.log("query:", query);
+        if (name == null)
+            return;
+
+        let picture: any = {
+            name: name,
+            particle: arrayParticle
+        };
+
+        let query: URLSearchParams = new URLSearchParams(<any>picture);
+        await fetch(url + "/store?" + query.toString());
+        console.log(url);
+
+        // console.log("name");
+        // console.log(picture);
+        // console.log("query:", query);
         // let response: Response = await fetch(url + "/save?" + query.toString());
         // let responseText: string = await response.text();
         // alert(responseText);

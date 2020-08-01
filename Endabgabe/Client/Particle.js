@@ -2,11 +2,10 @@
 var Endabgabe;
 (function (Endabgabe) {
     class Particle {
-        // velocity: Vector;
-        constructor(_x, _y, _size) {
+        constructor(_x, _y, _size, _colour) {
             this.position = new Endabgabe.Vector(_x, _y);
-            // this.velocity = new Vector(0.3, 3);
             this.size = _size;
+            this.colour = _colour;
         }
         draw() {
             let particlenumber = 50;
@@ -39,13 +38,31 @@ var Endabgabe;
                 Endabgabe.crc2.restore();
             }
         }
-        changecolor(_timeslice) {
-            let s = "0123456789ABCDEF";
-            let c = "#";
-            for (let i = 0; i < 6; i++) {
-                c += s[Math.ceil(Math.random() * 15)];
+        changecolor() {
+            if (this.colour == 1) {
+                let s = "0123AB";
+                let c = "#";
+                for (let i = 0; i < 6; i++) {
+                    c += s[Math.ceil(Math.random() * 5)];
+                }
+                Endabgabe.crc2.fillStyle = c;
             }
-            Endabgabe.crc2.fillStyle = c;
+            if (this.colour == 2) {
+                let s = "456CD";
+                let c = "#";
+                for (let i = 0; i < 6; i++) {
+                    c += s[Math.ceil(Math.random() * 5)];
+                }
+                Endabgabe.crc2.fillStyle = c;
+            }
+            if (this.colour == 3) {
+                let s = "789EF";
+                let c = "#";
+                for (let i = 0; i < 6; i++) {
+                    c += s[Math.ceil(Math.random() * 5)];
+                }
+                Endabgabe.crc2.fillStyle = c;
+            }
         }
     }
     Endabgabe.Particle = Particle;

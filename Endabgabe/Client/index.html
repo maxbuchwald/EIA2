@@ -15,53 +15,65 @@
     <header>
 
     </header>
-    <canvas id="canvas" width="800" height="600">
+    <canvas id="canvas" width="1200" height="800">
     </canvas>
     <div id="right">
+        <form id="canvasForm">
+            <div>
+                <input type="radio" name="Particle" id="small" value="Small" checked />
+                <label for="small">Small </label>
+                <input type="radio" name="Particle" id="medium" value="Medium" />
+                <label for="medium">Medium </label>
+                <input type="radio" name="Particle" id="big" value="Big" />
+                <label for="big">Big</label>
+            </div>
+            <div>
+                <button id="clearCanvas">Clear Canvas</button>
 
-        <div>
-            <input type="radio" name="Particle" id="small" value="Small" checked />
-            <label for="small">Small </label>
-            <input type="radio" name="Particle" id="medium" value="Medium" />
-            <label for="medium">Medium </label>
-            <input type="radio" name="Particle" id="big" value="Big" />
-            <label for="big">Big</label>
-        </div>
-        <div>
-            <button id="clearCanvas">Clear Canvas</button>
+            </div>
 
-        </div>
+            <div id="form">
 
-        <div id="form">
+                <input type="radio" name="Format" value="format1" id="format1" checked />
+                <label for="format1">Format 1</label> <br>
+                <input type="radio" name="Format" value="format2" id="format2" />
+                <label for="format1">Format 2</label> <br>
+                <input type="radio" name="Format" value="format3" id="format3"  />
+                <label for="format1">Format 3</label> <br>
 
-            <input type="radio" name="Radiogroup" value="radio1" id="format1" />
-            <label for="format1">Format 1</label> <br>
-            <input type="radio" name="Radiogroup" value="radio2" id="format2" />
-            <label for="format1">Format 2</label> <br>
-            <input type="radio" name="Radiogroup" value="radio3" id="format3" />
-            <label for="format1">Format 3</label> <br>
+            </div>
+            <div>
+                <input type="text" name="objects" list="objects" placeholder="select an Object to change" />
+                <datalist id="objects">
 
-        </div>
-        <div>
-            <input type="text" name="objects" list="objects" placeholder="select an Object to change" />
-            <datalist id="objects">
-
-            </datalist>
-        </div>
-        <div>
-            <input type="radio" name="Radiogroup" value="radio1" id="colour1" />
-            <label for="format1">colour 1</label> <br>
-            <input type="radio" name="Radiogroup" value="radio2" id="colour2" />
-            <label for="format1">colour 2</label> <br>
-            <input type="radio" name="Radiogroup" value="radio3" id="colour3" />
-            <label for="format1">colour 3</label> <br>
-        </div>
-
-        <div>
-            <button type="button" id="submit">Absenden</button>
+                </datalist>
+            </div>
+            <div>
+                <input type="radio" name="Colour" value="colour1" id="colour1" checked />
+                <label for="colour1">colour 1</label> <br>
+                <input type="radio" name="Colour" value="colour2" id="colour2" />
+                <label for="colour2">colour 2</label> <br>
+                <input type="radio" name="Colour" value="colour3" id="colour3" />
+                <label for="colour3">colour 3</label> <br>
+            </div>
+            <div>
+                <button type="button" id="submit">Absenden</button>
+            </div>
+        </form>
+        <div class="scoreboard">
+            <table border = "1">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Bild</th>
+                    </tr>
+                </thead>
+                <tbody id="tableScoreboardBody">
+                </tbody>
+            </table>
         </div>
     </div>
-    </form>
+
 
 </body>
 
