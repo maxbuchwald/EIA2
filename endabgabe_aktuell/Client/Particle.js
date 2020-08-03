@@ -6,6 +6,7 @@ var Endabgabe;
             this.position = new Endabgabe.Vector(_x, _y);
             this.size = _size;
             this.colour = _colour;
+            this.velocity = new Endabgabe.Vector((Math.random() * -5), (Math.random() * -5.5 + 2.5)); // -0.5 - 0.5 || 2 - 3
         }
         draw() {
             let particlenumber = 50;
@@ -30,7 +31,7 @@ var Endabgabe;
                     gety = Math.sin(x) * radius / 3;
                 }
                 Endabgabe.crc2.save();
-                Endabgabe.crc2.translate(this.x, this.y);
+                // crc2.translate(this.x, this.y);
                 Endabgabe.crc2.beginPath();
                 Endabgabe.crc2.arc(this.position.x + getx, this.position.y + gety, 3, 0, 2 * Math.PI);
                 Endabgabe.crc2.fill();
@@ -62,6 +63,21 @@ var Endabgabe;
                     c += s[Math.ceil(Math.random() * 5)];
                 }
                 Endabgabe.crc2.fillStyle = c;
+            }
+        }
+        move() {
+            this.position.add(this.velocity);
+            if (this.position.x < 0) {
+                this.position.x += Endabgabe.crc2.canvas.width;
+            }
+            if (this.position.y < 0) {
+                this.position.y += Endabgabe.crc2.canvas.height;
+            }
+            if (this.position.x > Endabgabe.crc2.canvas.width) {
+                this.position.x -= Endabgabe.crc2.canvas.width;
+            }
+            if (this.position.y > Endabgabe.crc2.canvas.height) {
+                this.position.y -= Endabgabe.crc2.canvas.height;
             }
         }
     }

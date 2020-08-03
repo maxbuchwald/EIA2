@@ -4,12 +4,11 @@ var Endabgabe;
     window.addEventListener("load", handleLoad);
     let updateIntervalId = 0;
     Endabgabe.arrayParticle = [];
-    let objectDragDrop;
-    let dragDrop = false;
     let size = 1;
     let colour = 1;
-    Endabgabe.url = "http://localhost:5001";
-    async function handleLoad(_event) {
+    Endabgabe.url = "https://eia-repository-mb.herokuapp.com/";
+    let move = false;
+    function handleLoad() {
         Endabgabe.canvas = document.querySelector("canvas");
         if (!Endabgabe.canvas)
             return;
@@ -38,14 +37,20 @@ var Endabgabe;
         form.addEventListener("change", chooseSizeCanvas);
         let submit = document.getElementById("submit");
         submit.addEventListener("click", sendPicture);
+        let load = document.getElementById("load");
+        load.addEventListener("click", loadPicture);
         Endabgabe.canvas.addEventListener("mousedown", pickSymbol);
+        // Move Button
+        let moveButton = document.getElementById("move");
+        moveButton.addEventListener("click", () => { move = true; });
+        let stopMoveButton = document.getElementById("stopMove");
+        stopMoveButton.addEventListener("click", () => { move = false; });
+        showSavings();
     }
     function setSize(_size) {
         size = _size;
     }
     function pickSymbol(_event) {
-        // console.log("Mousedown");
-        dragDrop = true;
         let offsetX = _event.clientX;
         let offsetY = _event.clientY;
         for (let particle of Endabgabe.arrayParticle) {
@@ -55,9 +60,7 @@ var Endabgabe;
                 particle.position.y + 15 > offsetY) {
                 let index = Endabgabe.arrayParticle.indexOf(particle);
                 Endabgabe.arrayParticle.splice(index, 1);
-                objectDragDrop = particle;
             }
-            // console.log(arrayParticle);
         }
     }
     function setcolour(_colour) {
@@ -68,58 +71,93 @@ var Endabgabe;
     }
     function resetCanvas() {
         Endabgabe.arrayParticle = [];
-        // crc2.clearRect(0, 0, canvas.width, canvas.height);
     }
     function dropParticle(_event) {
         let x = _event.clientX;
         let y = _event.clientY;
         let particle = new Endabgabe.Particle(x, y, size, colour);
         Endabgabe.arrayParticle.push(particle);
-        // console.log(arrayParticle);
     }
     function update(_background) {
         Endabgabe.crc2.putImageData(_background, 0, 0);
+        if (move == true) {
+            for (let particle of Endabgabe.arrayParticle) {
+                particle.move();
+            }
+        }
         for (let particle of Endabgabe.arrayParticle) {
             particle.draw();
         }
-        // moveparticle();
     }
     function chooseSizeCanvas(_event) {
         let target = _event.target;
         let id = target.id;
         switch (id) {
             case "format1":
-                Endabgabe.crc2.canvas.width = 1200;
-                Endabgabe.crc2.canvas.height = 800;
+                Endabgabe.crc2.canvas.width = 1000;
+                Endabgabe.crc2.canvas.height = 600;
                 break;
             case "format2":
-                Endabgabe.crc2.canvas.width = 800;
-                Endabgabe.crc2.canvas.height = 600;
+                Endabgabe.crc2.canvas.width = 700;
+                Endabgabe.crc2.canvas.height = 500;
                 break;
             case "format3":
-                Endabgabe.crc2.canvas.width = 400;
-                Endabgabe.crc2.canvas.height = 600;
+                Endabgabe.crc2.canvas.width = 600;
+                Endabgabe.crc2.canvas.height = 400;
                 break;
         }
     }
-    async function sendPicture(_event) {
+    async function sendPicture() {
         let name = prompt("Canvas Name");
-        // console.log(name);
-        if (name == null)
+        if (name == "") {
+            alert("please enter name");
             return;
+        }
         let picture = {
             name: name,
-            particle: Endabgabe.arrayParticle
+            // URLSearchParams erwartet eine key value pair mit jeweils strings somit muss dass particle array zu einem string konvertiert werden
+            particle: JSON.stringify(Endabgabe.arrayParticle)
         };
         let query = new URLSearchParams(picture);
-        await fetch(Endabgabe.url + "/store?" + query.toString());
-        console.log(Endabgabe.url);
-        // console.log("name");
-        // console.log(picture);
-        // console.log("query:", query);
-        // let response: Response = await fetch(url + "/save?" + query.toString());
-        // let responseText: string = await response.text();
-        // alert(responseText);
+        await fetch(Endabgabe.url + "/save?" + query.toString());
+        alert("Picture saved!");
+    }
+    async function loadPicture() {
+        let name = prompt("Canvas Name");
+        if (name == null) {
+            return;
+        }
+        let searchParams = {
+            name: name
+        };
+        let query = new URLSearchParams(searchParams);
+        let response = await fetch(Endabgabe.url + "/load?" + query.toString());
+        // das Response objekt gibt mit der json funktion den inhalt der antwort als json zurück
+        let responseJson = await response.json();
+        if (responseJson == null) {
+            alert("Canvas does not exist");
+            return;
+        }
+        // rohe partikel in array form
+        let particlesRaw = JSON.parse(responseJson.particle);
+        resetCanvas();
+        console.log(particlesRaw);
+        for (let particle of particlesRaw) {
+            // von den rohen partikel daten werden die Particle objekte erzeugt und dem canvas hinzugefügt
+            let newParticle = new Endabgabe.Particle(particle.position.x, particle.position.y, particle.size, particle.colour);
+            Endabgabe.arrayParticle.push(newParticle);
+        }
+    }
+    async function showSavings() {
+        let response = await fetch(Endabgabe.url + "/read");
+        let texte = await response.text();
+        let savings = JSON.parse(texte);
+        for (let i = 0; i < savings.length; i++) {
+            let name = savings[i];
+            let tdName = "<li>" + name + "</li>";
+            let tablesavingsBody = document.getElementById("tableSavingsBody");
+            tablesavingsBody.innerHTML += tdName;
+        }
     }
 })(Endabgabe || (Endabgabe = {}));
 //# sourceMappingURL=canvas.js.map

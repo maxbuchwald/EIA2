@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Animation</title>
+    <link rel="stylesheet" href="canvas.css" type="text/css" media="screen" />
+    <script src="canvas.js" type="text/javascript" charset="utf-8"></script>
+    <script src="Vector.js" type="text/javascript" charset="utf-8"></script>
+    <script src="Particle.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>
+    <header>
+
+    </header>
+    <canvas id="canvas" width="1000" height="600">
+    </canvas>
+    <span>
+        <h1>Particles</h1>
+        <h1 id="io">io</h1>
+    </span>
+    <div id="right">
+        <div id="form">
+            <h3>choose Canvas-Size</h3>
+            <input type="radio" name="Format" value="format1" id="format1" checked />
+            <label for="format1">Format 1</label> <br>
+            <input type="radio" name="Format" value="format2" id="format2" />
+            <label for="format1">Format 2</label> <br>
+            <input type="radio" name="Format" value="format3" id="format3" />
+            <label for="format1">Format 3</label> <br>
+
+        </div>
+        <form id="canvasForm">
+            <div>
+                <h3>choose Particle-Size</h3>
+                <input type="radio" name="Particle" id="small" value="Small" checked />
+                <label for="small">Small </label><br>
+                <input type="radio" name="Particle" id="medium" value="Medium" />
+                <label for="medium">Medium </label><br>
+                <input type="radio" name="Particle" id="big" value="Big" />
+                <label for="big">Big</label><br>
+            </div>
+            <div>
+                <h3>choose Particle-Colour</h3>
+                <input type="radio" name="Colour" value="colour1" id="colour1" checked />
+                <label for="colour1">colour 1</label> <br>
+                <input type="radio" name="Colour" value="colour2" id="colour2" />
+                <label for="colour2">colour 2</label> <br>
+                <input type="radio" name="Colour" value="colour3" id="colour3" />
+                <label for="colour3">colour 3</label> <br>
+            </div>
+            <div>
+                <button id="clearCanvas" type= "button" >Clear Canvas</button>
+                <button id="move" type="button">Move</button>
+                <button id="stopMove" type="button">Stop Move</button>
+            </div>
+            <div>
+                <button type="button" id="submit">Save</button>
+                <button type="button" id="load">Load</button>
+            </div>
+        </form>
+
+    </div>
+    <div>
+    <p>Saved Pictures</p>
+        <ol id="tableSavingsBody">
+        </ol>
+
+    </div>
+    
+
+
+</body>
+
+</html>

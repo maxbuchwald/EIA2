@@ -1,17 +1,21 @@
 namespace Endabgabe {
     export class Particle {
-        x: number;
-        y: number;
+        // x: number;
+        // y: number;
         position: Vector;
         size: number;
         colour: number;
+        velocity: Vector;
 
 
         constructor(_x: number, _y: number, _size: number, _colour: number) {
             this.position = new Vector(_x, _y);
             this.size = _size;
             this.colour = _colour;
+            this.velocity = new Vector((Math.random() * -5), (Math.random() * -5.5 + 2.5)); // -0.5 - 0.5 || 2 - 3
+
         }
+
         draw(): void {
 
             let particlenumber: number = 50;
@@ -45,7 +49,7 @@ namespace Endabgabe {
 
                 crc2.save();
 
-                crc2.translate(this.x, this.y);
+                // crc2.translate(this.x, this.y);
 
                 crc2.beginPath();
 
@@ -69,7 +73,6 @@ namespace Endabgabe {
                     c += s[Math.ceil(Math.random() * 5)];
                 }
                 crc2.fillStyle = c;
-
             }
             if (this.colour == 2) {
                 let s: string = "456CD";
@@ -87,16 +90,28 @@ namespace Endabgabe {
                     c += s[Math.ceil(Math.random() * 5)];
                 }
                 crc2.fillStyle = c;
-
             }
         }
-        // move(_number: number): void {
-        //     crc2.save();
-        //     crc2.translate(this.position.x + _number, this.y);
-        //     console.log(this.position.x);
-        //     crc2.restore();
-        //     return this.position.x;
-        // }
+        move(): void {
+
+            this.position.add(this.velocity);
+
+            if (this.position.x < 0) {
+                this.position.x += crc2.canvas.width;
+            }
+
+            if (this.position.y < 0) {
+                this.position.y += crc2.canvas.height;
+            }
+
+            if (this.position.x > crc2.canvas.width) {
+                this.position.x -= crc2.canvas.width;
+            }
+
+            if (this.position.y > crc2.canvas.height) {
+                this.position.y -= crc2.canvas.height;
+            }
+        }
     }
 }
 

@@ -1,0 +1,54 @@
+#canvas {
+    position: absolute;
+    top: 0; 
+    left: 0;
+    z-index: -10;
+    background: linear-gradient( #003380 ,  #0052cc,  #1a75ff);
+    float: left;
+}
+
+div {
+    float: left;
+    margin-right: 5%;
+}
+
+div#right {
+    margin-left: 80%;
+    position: relative;
+}
+
+body {
+    background-color: white;
+}
+
+#clearCanvas {
+    margin-top: 70%;
+}
+#io{
+    color: #0052cc;
+    float: right;
+    margin-top: -4.5%;
+    margin-left: -5%;
+
+}
+h1{
+    font-size: 3em;
+    margin-left: 80%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+button{
+
+    height: 30px;
+    border-radius: 5%;
+    background-color: #0052cc;
+    color: white;
+    margin-top: 10%;
+}
+h3 {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #0052cc; 
+    font-size: 1em;
+}
+#form{
+    margin-top: -10%;
+}

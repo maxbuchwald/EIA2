@@ -1,18 +1,19 @@
 namespace Endabgabe {
     window.addEventListener("load", handleLoad);
+
     export let crc2: CanvasRenderingContext2D;
     export let canvas: HTMLCanvasElement;
 
     let updateIntervalId: number = 0;
     export let arrayParticle: Particle[] = [];
 
-    let objectDragDrop: Particle;
-    let dragDrop: boolean = false;
     let size: number = 1;
     let colour: number = 1;
-    export let url: string = "http://localhost:5001";
+    export let url: string = "https://eia-repository-mb.herokuapp.com/";
 
-    async function handleLoad(_event: Event): Promise<void> {
+    let move: boolean = false;
+
+    function handleLoad(): void {
         canvas = <HTMLCanvasElement>document.querySelector("canvas");
 
         if (!canvas)
@@ -56,8 +57,19 @@ namespace Endabgabe {
         let submit: HTMLButtonElement = <HTMLButtonElement>document.getElementById("submit");
         submit.addEventListener("click", sendPicture);
 
+        let load: HTMLButtonElement = <HTMLButtonElement>document.getElementById("load");
+        load.addEventListener("click", loadPicture);
+
         canvas.addEventListener("mousedown", pickSymbol);
 
+
+        // Move Button
+        let moveButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("move");
+        moveButton.addEventListener("click", () => { move = true; });
+        let stopMoveButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("stopMove");
+        stopMoveButton.addEventListener("click", () => { move = false; });
+
+        showSavings();
     }
 
     function setSize(_size: number): void {
@@ -65,9 +77,7 @@ namespace Endabgabe {
     }
 
     function pickSymbol(_event: MouseEvent): void {
-        // console.log("Mousedown");
 
-        dragDrop = true;
 
         let offsetX: number = _event.clientX;
         let offsetY: number = _event.clientY;
@@ -80,10 +90,7 @@ namespace Endabgabe {
                 particle.position.y + 15 > offsetY) {
                 let index: number = arrayParticle.indexOf(particle);
                 arrayParticle.splice(index, 1);
-                objectDragDrop = particle;
             }
-            // console.log(arrayParticle);
-
         }
     }
 
@@ -96,7 +103,6 @@ namespace Endabgabe {
 
     function resetCanvas(): void {
         arrayParticle = [];
-        // crc2.clearRect(0, 0, canvas.width, canvas.height);
     }
 
     function dropParticle(_event: MouseEvent): void {
@@ -105,17 +111,19 @@ namespace Endabgabe {
 
         let particle: Particle = new Particle(x, y, size, colour);
         arrayParticle.push(particle);
-        // console.log(arrayParticle);
-
     }
 
     function update(_background: ImageData): void {
         crc2.putImageData(_background, 0, 0);
 
+        if (move == true) {
+            for (let particle of arrayParticle) {
+                particle.move();
+            }
+        }
         for (let particle of arrayParticle) {
             particle.draw();
         }
-        // moveparticle();
     }
 
     function chooseSizeCanvas(_event: Event): void {
@@ -125,47 +133,87 @@ namespace Endabgabe {
         switch (id) {
 
             case "format1":
-                crc2.canvas.width = 1200;
-                crc2.canvas.height = 800;
+                crc2.canvas.width = 1000;
+                crc2.canvas.height = 600;
                 break;
 
             case "format2":
-                crc2.canvas.width = 800;
-                crc2.canvas.height = 600;
+                crc2.canvas.width = 700;
+                crc2.canvas.height = 500;
                 break;
 
             case "format3":
-                crc2.canvas.width = 400;
-                crc2.canvas.height = 600;
+                crc2.canvas.width = 600;
+                crc2.canvas.height = 400;
                 break;
 
         }
     }
 
-    async function sendPicture(_event: Event): Promise<void> {
-
+    async function sendPicture(): Promise<void> {
         let name: string | null = prompt("Canvas Name");
-        // console.log(name);
 
-        if (name == null)
+        if (name == "") {
+            alert("please enter name");
             return;
+        }
 
         let picture: any = {
             name: name,
-            particle: arrayParticle
+            // URLSearchParams erwartet eine key value pair mit jeweils strings somit muss dass particle array zu einem string konvertiert werden
+            particle: JSON.stringify(arrayParticle)
         };
-
         let query: URLSearchParams = new URLSearchParams(<any>picture);
-        await fetch(url + "/store?" + query.toString());
-        console.log(url);
-
-        // console.log("name");
-        // console.log(picture);
-        // console.log("query:", query);
-        // let response: Response = await fetch(url + "/save?" + query.toString());
-        // let responseText: string = await response.text();
-        // alert(responseText);
+        await fetch(url + "/save?" + query.toString());
+        alert("Picture saved!");
     }
 
-}
+    async function loadPicture(): Promise<void> {
+        let name: string | null = prompt("Canvas Name");
 
+        if (name == null) {
+            return;
+        }
+        let searchParams: any = {
+            name: name
+        };
+
+        let query: URLSearchParams = new URLSearchParams(<any>searchParams);
+        let response: Response = await fetch(url + "/load?" + query.toString());
+
+        // das Response objekt gibt mit der json funktion den inhalt der antwort als json zurück
+        let responseJson: any = await response.json();
+
+        if (responseJson == null) {
+            alert("Canvas does not exist");
+            return;
+        }
+
+        // rohe partikel in array form
+        let particlesRaw: any = JSON.parse(responseJson.particle);
+        resetCanvas();
+        console.log(particlesRaw);
+
+
+        for (let particle of particlesRaw) {
+            // von den rohen partikel daten werden die Particle objekte erzeugt und dem canvas hinzugefügt
+            let newParticle: Particle = new Particle(particle.position.x, particle.position.y, particle.size, particle.colour);
+            arrayParticle.push(newParticle);
+        }
+
+
+    }
+
+    async function showSavings(): Promise<void> {
+        let response: Response = await fetch(url + "/read");
+        let texte: string = await response.text();
+        let savings: any = JSON.parse(texte);
+
+        for (let i: number = 0; i < savings.length; i++) {
+            let name: any = savings[i];
+            let tdName: string = "<li>" + name + "</li>";
+            let tablesavingsBody: HTMLElement = <HTMLElement>document.getElementById("tableSavingsBody");
+            tablesavingsBody.innerHTML += tdName;
+        }
+    }
+}
