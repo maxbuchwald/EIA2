@@ -9,7 +9,7 @@ namespace Endabgabe {
 
     let size: number = 1;
     let colour: number = 1;
-    export let url: string = "https://eia-repository-mb.herokuapp.com/";
+    export let url: string = "http://localhost:5001";
 
     let move: boolean = false;
 
@@ -192,7 +192,6 @@ namespace Endabgabe {
         // rohe partikel in array form
         let particlesRaw: any = JSON.parse(responseJson.particle);
         resetCanvas();
-        console.log(particlesRaw);
 
 
         for (let particle of particlesRaw) {

@@ -49,8 +49,6 @@ namespace Endabgabe {
 
                 crc2.save();
 
-                // crc2.translate(this.x, this.y);
-
                 crc2.beginPath();
 
                 crc2.arc(this.position.x + getx, this.position.y + gety, 3, 0, 2 * Math.PI);

@@ -31,7 +31,6 @@ var Endabgabe;
                     gety = Math.sin(x) * radius / 3;
                 }
                 Endabgabe.crc2.save();
-                // crc2.translate(this.x, this.y);
                 Endabgabe.crc2.beginPath();
                 Endabgabe.crc2.arc(this.position.x + getx, this.position.y + gety, 3, 0, 2 * Math.PI);
                 Endabgabe.crc2.fill();

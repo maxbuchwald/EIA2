@@ -15,10 +15,6 @@ namespace Endabgabe {
         add(_addend: Vector): void {
             this.x += _addend.x;
             this.y += _addend.y;
-        }
-
-        // Geschwindigkeit zufällig berechnen & Richtung festlegen
-        
-
+        }        
     }
 }

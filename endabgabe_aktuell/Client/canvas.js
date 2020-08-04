@@ -6,7 +6,7 @@ var Endabgabe;
     Endabgabe.arrayParticle = [];
     let size = 1;
     let colour = 1;
-    Endabgabe.url = "https://eia-repository-mb.herokuapp.com/";
+    Endabgabe.url = "http://localhost:5001";
     let move = false;
     function handleLoad() {
         Endabgabe.canvas = document.querySelector("canvas");
@@ -141,7 +141,6 @@ var Endabgabe;
         // rohe partikel in array form
         let particlesRaw = JSON.parse(responseJson.particle);
         resetCanvas();
-        console.log(particlesRaw);
         for (let particle of particlesRaw) {
             // von den rohen partikel daten werden die Particle objekte erzeugt und dem canvas hinzugefügt
             let newParticle = new Endabgabe.Particle(particle.position.x, particle.position.y, particle.size, particle.colour);
